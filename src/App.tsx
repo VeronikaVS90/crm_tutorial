@@ -1,35 +1,70 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route, Outlet, NavLink } from "react-router";
+import { Products } from "./pages/Products";
+import { Home } from "./pages/Home";
+import { lazy, Suspense } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const FinancialPage = lazy(() => import("./pages/Financial"));
 
+function RootLayout() {
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <nav>
+          <ul>
+            <li>
+              <NavLink
+                style={({ isActive }) => ({
+                  color: isActive ? "red" : "black",
+                })}
+                to="/"
+              >
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                style={({ isActive }) => ({
+                  color: isActive ? "red" : "black",
+                })}
+                to="/products"
+              >
+                Products
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                style={({ isActive }) => ({
+                  color: isActive ? "red" : "black",
+                })}
+                to="/financial"
+              >
+                Financial
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <Suspense fallback={<p>Loading...</p>}>
+          <Outlet />
+        </Suspense>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+function App() {
+  return (
+    <>
+      <Routes>
+        <Route element={<RootLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/financial" element={<FinancialPage />} />
+        </Route>
+      </Routes>
+    </>
+  );
+}
+
+export default App;
