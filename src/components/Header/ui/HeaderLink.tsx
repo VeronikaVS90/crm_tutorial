@@ -10,7 +10,6 @@ export default function HeaderLink(props: HeaderLinkProps) {
   return (
     <Button
       onClick={() => navigate(props.path)}
-      key={props.path}
       sx={{ my: 2, color: "white", display: "block" }}
     >
       {props.children}

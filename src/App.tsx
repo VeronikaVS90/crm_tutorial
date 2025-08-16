@@ -8,15 +8,13 @@ const FinancialPage = lazy(() => import("./pages/Financial"));
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route element={<RootLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/financial" element={<FinancialPage />} />
-        </Route>
-      </Routes>
-    </>
+    <Routes>
+      <Route element={<RootLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/financial" element={<FinancialPage />} />
+      </Route>
+    </Routes>
   );
 }
 

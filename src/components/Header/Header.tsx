@@ -13,9 +13,11 @@ export default function Header() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo />
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: "flex" }}>
             {navLinks.map((link) => (
-              <HeaderLink path={link.path}>{link.label}</HeaderLink>
+              <HeaderLink key={link.path} path={link.path}>
+                {link.label}
+              </HeaderLink>
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
