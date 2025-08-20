@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { Suspense } from "react";
 import Header from "./Header";
+import CircularIndeterminate from "./Loader/Loader";
 
 export default function RootLayout() {
   return (
@@ -8,7 +9,7 @@ export default function RootLayout() {
       <Header />
 
       <main>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<CircularIndeterminate />}>
           <Outlet />
         </Suspense>
       </main>
