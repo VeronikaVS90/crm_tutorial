@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { productsStore } from "../../shared/store/products";
 import { observer } from "mobx-react-lite";
 import CircularIndeterminate from "../../components/Loader/Loader";
+import Table from "../../components/Table";
+import { productColumns } from "./lib";
 
 const Products = observer(() => {
   const { products, isLoading } = productsStore;
@@ -17,14 +19,7 @@ const Products = observer(() => {
   return (
     <>
       <h1>Products</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <h2>{product.name}</h2>
-            <p>{product.category}</p>
-          </li>
-        ))}
-      </ul>
+      <Table rows={products} columns={productColumns} />
     </>
   );
 });

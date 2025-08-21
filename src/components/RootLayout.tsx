@@ -8,7 +8,7 @@ export default function RootLayout() {
     <>
       <Header />
 
-      <main>
+      <main style={{ padding: "24px 24px 48px" }}>
         <Suspense fallback={<CircularIndeterminate />}>
           <Outlet />
         </Suspense>
