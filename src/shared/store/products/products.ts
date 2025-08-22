@@ -1,6 +1,7 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import { productsService } from "../../services/products";
 import type { IProduct } from "../../../types/products";
+import { handleError } from "../../services/errorHandler";
 
 class ProductsStore {
   products: IProduct[] = [];
@@ -22,7 +23,7 @@ class ProductsStore {
         this.products = data;
       });
     } catch (err) {
-      console.error("Error fetching products:", err);
+      handleError(err, "Failed to load products. Please, try again later.");
     } finally {
       runInAction(() => {
         this.isLoading = false;

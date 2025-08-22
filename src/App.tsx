@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
 import { lazy } from "react";
-import RootLayout from "./components/RootLayout";
+import RootLayout from "./components/RootLayout/RootLayout";
 
 const HomePage = lazy(() => import("./pages/Home"));
 const ProductsPage = lazy(() => import("./pages/Products"));

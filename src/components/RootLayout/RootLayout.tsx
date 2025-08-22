@@ -1,7 +1,8 @@
 import { Outlet } from "react-router";
 import { Suspense } from "react";
-import Header from "./Header";
-import CircularIndeterminate from "./Loader/Loader";
+import Header from "../Header";
+import CircularIndeterminate from "../Loader/Loader";
+import { ToastContainer } from "react-toastify";
 
 export default function RootLayout() {
   return (
@@ -12,6 +13,7 @@ export default function RootLayout() {
         <Suspense fallback={<CircularIndeterminate />}>
           <Outlet />
         </Suspense>
+        <ToastContainer />
       </main>
     </>
   );
