@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { financialStore } from "../../shared/store/financial";
 import { observer } from "mobx-react-lite";
 import CircularIndeterminate from "../../components/Loader/Loader";
+import Table from "../../components/Table";
+import { financialColumns } from "./lib";
 
 const Financial = observer(() => {
   const { financial, isLoading } = financialStore;
@@ -17,14 +19,7 @@ const Financial = observer(() => {
   return (
     <>
       <h1>Financial</h1>
-      <ul>
-        {financial.map((finance) => (
-          <li key={finance.id}>
-            <p>{finance.month}</p>
-            <p>{finance.transactions}</p>
-          </li>
-        ))}
-      </ul>
+      <Table rows={financial} columns={financialColumns} />
     </>
   );
 });
