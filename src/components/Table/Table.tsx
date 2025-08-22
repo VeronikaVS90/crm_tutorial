@@ -40,7 +40,14 @@ export default function Table<T extends ITableRow>({
               {columns.map((column) => (
                 <TableCell
                   key={String(column.id)}
-                  style={{ minWidth: column.minWidth }}
+                  sx={{
+                    minWidth: column.minWidth,
+                    backgroundColor: "#f5f5f5",
+                    fontWeight: "bold",
+                    color: "#333",
+                    borderBottom: "2px solid #ccc",
+                    boxShadow: "inset 0 -1px 0 #ddd",
+                  }}
                 >
                   {column.label}
                 </TableCell>

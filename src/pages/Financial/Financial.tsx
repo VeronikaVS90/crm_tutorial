@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { financialStore } from "../../shared/store/financial";
 import { observer } from "mobx-react-lite";
 import CircularIndeterminate from "../../components/Loader/Loader";
-import Table from "../../components/Table";
+import { Table } from "../../components/Table";
 import { financialColumns } from "./lib";
 
 const Financial = observer(() => {
