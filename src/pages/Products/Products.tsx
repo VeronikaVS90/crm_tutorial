@@ -23,14 +23,6 @@ const Products = observer(() => {
     setOpen(true);
   };
 
-  const handleSubmit = (product: {
-    name: string;
-    category: string;
-    price: number;
-  }) => {
-    console.log("Created product:", product);
-  };
-
   return (
     <>
       <TableHeader
@@ -41,11 +33,7 @@ const Products = observer(() => {
 
       <Table rows={products} columns={productColumns} />
 
-      <CreateProductModal
-        open={open}
-        onClose={() => setOpen(false)}
-        onSubmit={handleSubmit}
-      />
+      <CreateProductModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 });
