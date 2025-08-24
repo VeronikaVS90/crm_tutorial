@@ -12,9 +12,20 @@ export default function CreateProductForm({ form }: CreateProductFormProps) {
 
   return (
     <form>
-      <TextField label="Name" {...register("name")} />
-      <TextField label="Category" {...register("category")} />
-      <TextField label="Price" type="number" {...register("price")} />
+      <TextField label="Name" {...register("name")} fullWidth margin="normal" />
+      <TextField
+        label="Category"
+        {...register("category")}
+        fullWidth
+        margin="normal"
+      />
+      <TextField
+        label="Price"
+        type="number"
+        {...register("price")}
+        fullWidth
+        margin="normal"
+      />
       <FormControlLabel
         control={<Checkbox />}
         label="Is Available"

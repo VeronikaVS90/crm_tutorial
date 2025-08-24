@@ -32,21 +32,53 @@ export default function CreateProductModal({
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Create a product</DialogTitle>
-      <DialogContent>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+      sx={{
+        "& .MuiDialog-paper": {
+          borderRadius: 4,
+          padding: 2,
+          backgroundColor: "#fafafa",
+        },
+      }}
+    >
+      <DialogTitle
+        sx={{
+          fontWeight: "bold",
+          fontSize: "1.25rem",
+          textAlign: "center",
+          textTransform: "uppercase",
+          pb: 1,
+        }}
+      >
+        Create a product
+      </DialogTitle>
+
+      <DialogContent dividers>
+        <Box
+          component="form"
+          sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
+        >
           <CreateProductForm form={form} />
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button
+          onClick={onClose}
+          color="primary"
+          variant="outlined"
+          sx={{ borderRadius: 2 }}
+        >
           Cancel
         </Button>
         <Button
           type="button"
           variant="contained"
           onClick={form.handleSubmit(onSubmit)}
+          sx={{ borderRadius: 2 }}
         >
           Create
         </Button>
