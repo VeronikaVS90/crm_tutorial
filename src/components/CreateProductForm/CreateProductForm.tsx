@@ -19,6 +19,7 @@ export default function CreateProductForm({ form }: CreateProductFormProps) {
         control={<Checkbox />}
         label="Is Available"
         {...register("isAvailable")}
+        checked={form.watch("isAvailable") || false}
       />
     </form>
   );
