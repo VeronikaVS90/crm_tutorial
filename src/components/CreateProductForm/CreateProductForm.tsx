@@ -8,16 +8,28 @@ interface CreateProductFormProps {
 }
 
 export default function CreateProductForm({ form }: CreateProductFormProps) {
-  const { register } = form;
+  const {
+    register,
+    formState: { errors },
+  } = form;
 
   return (
     <form>
-      <TextField label="Name" {...register("name")} fullWidth margin="normal" />
+      <TextField
+        label="Name"
+        {...register("name")}
+        fullWidth
+        margin="normal"
+        error={!!errors.name}
+        helperText={errors.name?.message}
+      />
       <TextField
         label="Category"
         {...register("category")}
         fullWidth
         margin="normal"
+        error={!!errors.category}
+        helperText={errors.category?.message}
       />
       <TextField
         label="Price"
@@ -25,6 +37,8 @@ export default function CreateProductForm({ form }: CreateProductFormProps) {
         {...register("price")}
         fullWidth
         margin="normal"
+        error={!!errors.price}
+        helperText={errors.price?.message}
       />
       <FormControlLabel
         control={<Checkbox />}
