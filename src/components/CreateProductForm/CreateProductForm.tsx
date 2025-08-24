@@ -14,7 +14,7 @@ export default function CreateProductForm({ form }: CreateProductFormProps) {
   } = form;
 
   return (
-    <form>
+    <>
       <TextField
         label="Name"
         {...register("name")}
@@ -46,6 +46,6 @@ export default function CreateProductForm({ form }: CreateProductFormProps) {
         {...register("isAvailable")}
         checked={form.watch("isAvailable") || false}
       />
-    </form>
+    </>
   );
 }
