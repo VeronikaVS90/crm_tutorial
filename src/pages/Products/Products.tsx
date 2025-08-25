@@ -5,7 +5,7 @@ import CircularIndeterminate from "../../components/Loader/Loader";
 import { Table } from "../../components/Table";
 import { productColumns } from "./lib";
 import { TableHeader } from "../../components/Table";
-import CreateProductModal from "../../components/Modal";
+import { CreateProductModal } from "../../components/Modal";
 
 const Products = observer(() => {
   const { products, isLoading } = productsStore;

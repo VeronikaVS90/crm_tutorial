@@ -1,1 +1,2 @@
-export { default } from "./CreateProductModal";
+export { default as CreateProductModal } from "./CreateProductModal";
+export { default as CreateFinancialModal } from "./CreateFinancialModal";

@@ -1,12 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { financialStore } from "../../shared/store/financial";
 import { observer } from "mobx-react-lite";
 import CircularIndeterminate from "../../components/Loader/Loader";
 import { Table } from "../../components/Table";
 import { financialColumns } from "./lib";
+import { TableHeader } from "../../components/Table";
+import { CreateFinancialModal } from "../../components/Modal";
 
 const Financial = observer(() => {
   const { financial, isLoading } = financialStore;
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     financialStore.getFinance();
@@ -16,10 +19,20 @@ const Financial = observer(() => {
     return <CircularIndeterminate />;
   }
 
+  const handleCreate = () => {
+    setOpen(true);
+  };
+
   return (
     <>
-      <h1>Financial</h1>
+      <TableHeader
+        title="Financial"
+        onCreate={handleCreate}
+        onSearch={() => {}}
+      />
       <Table rows={financial} columns={financialColumns} />
+
+      <CreateFinancialModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 });
