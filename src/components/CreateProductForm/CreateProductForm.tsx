@@ -1,4 +1,4 @@
-import { type UseFormReturn } from "react-hook-form";
+import { type UseFormReturn, Controller } from "react-hook-form";
 import { type CreateProduct } from "./lib";
 
 import { Checkbox, FormControlLabel, TextField } from "@mui/material";
@@ -10,6 +10,7 @@ interface CreateProductFormProps {
 export default function CreateProductForm({ form }: CreateProductFormProps) {
   const {
     register,
+    control,
     formState: { errors },
   } = form;
 
@@ -40,11 +41,21 @@ export default function CreateProductForm({ form }: CreateProductFormProps) {
         error={!!errors.price}
         helperText={errors.price?.message}
       />
-      <FormControlLabel
-        control={<Checkbox />}
-        label="Is Available"
-        {...register("isAvailable")}
-        checked={form.watch("isAvailable") || false}
+      <Controller
+        name="isAvailable"
+        control={control}
+        render={({ field }) => (
+          <FormControlLabel
+            control={
+              <Checkbox
+                {...field}
+                checked={field.value || false}
+                onChange={(e) => field.onChange(e.target.checked)}
+              />
+            }
+            label="Is Available"
+          />
+        )}
       />
     </>
   );
