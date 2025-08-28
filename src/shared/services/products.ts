@@ -1,4 +1,4 @@
-import type { IProduct } from "../../types/products";
+import type { ICreateProductBody, IProduct } from "../../types/products";
 import { api } from "./api";
 
 async function getProducts() {
@@ -6,6 +6,12 @@ async function getProducts() {
   return res.data;
 }
 
+async function createProduct(data: ICreateProductBody) {
+  const res = await api.post<IProduct>("/products", data);
+  return res.data;
+}
+
 export const productsService = {
   getProducts,
+  createProduct,
 };

@@ -62,7 +62,7 @@ export default function Table<T extends ITableRow>({
                     const value = data[column.id];
                     return (
                       <TableCell key={String(column.id)}>
-                        {column.row?.(data) ?? value}
+                        {column.cell?.(data) ?? value}
                       </TableCell>
                     );
                   })}

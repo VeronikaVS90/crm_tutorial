@@ -13,38 +13,35 @@ import {
   type CreateProduct,
 } from "../CreateProductForm/lib";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { productsStore } from "../../shared/store/products";
+import { useState } from "react";
+import { handleError } from "../../shared/services/errorHandler";
 
 interface CreateProductModalProps {
   open: boolean;
   onClose: () => void;
 }
 
-export default function CreateProductModal({
-  open,
-  onClose,
-}: CreateProductModalProps) {
+function ModalBody({ onClose }: Pick<CreateProductModalProps, "onClose">) {
+  const [isCreating, setIsCreating] = useState(false);
+
   const form = useForm<CreateProduct>({
     resolver: yupResolver(createProductSchema),
   });
-  const onSubmit: SubmitHandler<CreateProduct> = (data) => {
-    console.log(data);
-    form.reset();
+  const onSubmit: SubmitHandler<CreateProduct> = async (data) => {
+    try {
+      setIsCreating(true);
+      await productsStore.createProduct(data);
+      form.reset();
+    } catch (err) {
+      handleError(err, "Failed to create product. Please, try again later.");
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullWidth
-      maxWidth="sm"
-      sx={{
-        "& .MuiDialog-paper": {
-          borderRadius: 4,
-          padding: 2,
-          backgroundColor: "#fafafa",
-        },
-      }}
-    >
+    <>
       <DialogTitle
         sx={{
           fontWeight: "bold",
@@ -58,11 +55,8 @@ export default function CreateProductModal({
       </DialogTitle>
 
       <DialogContent dividers>
-        <Box
-          component="form"
-          sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
-        >
-          <CreateProductForm form={form} />
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
+          <CreateProductForm form={form} disabled={isCreating} />
         </Box>
       </DialogContent>
       <DialogActions>
@@ -79,10 +73,34 @@ export default function CreateProductModal({
           variant="contained"
           onClick={form.handleSubmit(onSubmit)}
           sx={{ borderRadius: 2 }}
+          disabled={isCreating}
         >
           Create
         </Button>
       </DialogActions>
+    </>
+  );
+}
+
+export default function CreateProductModal({
+  open,
+  onClose,
+}: CreateProductModalProps) {
+  return (
+    <Dialog
+      open={open}
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+      sx={{
+        "& .MuiDialog-paper": {
+          borderRadius: 4,
+          padding: 2,
+          backgroundColor: "#fafafa",
+        },
+      }}
+    >
+      <ModalBody onClose={onClose} />
     </Dialog>
   );
 }

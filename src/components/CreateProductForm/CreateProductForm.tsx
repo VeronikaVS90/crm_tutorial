@@ -5,9 +5,13 @@ import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 
 interface CreateProductFormProps {
   form: UseFormReturn<CreateProduct>;
+  disabled: boolean;
 }
 
-export default function CreateProductForm({ form }: CreateProductFormProps) {
+export default function CreateProductForm({
+  form,
+  disabled,
+}: CreateProductFormProps) {
   const {
     register,
     control,
@@ -15,7 +19,7 @@ export default function CreateProductForm({ form }: CreateProductFormProps) {
   } = form;
 
   return (
-    <>
+    <form>
       <TextField
         label="Name"
         {...register("name")}
@@ -23,6 +27,7 @@ export default function CreateProductForm({ form }: CreateProductFormProps) {
         margin="normal"
         error={!!errors.name}
         helperText={errors.name?.message}
+        disabled={disabled}
       />
       <TextField
         label="Category"
@@ -31,6 +36,7 @@ export default function CreateProductForm({ form }: CreateProductFormProps) {
         margin="normal"
         error={!!errors.category}
         helperText={errors.category?.message}
+        disabled={disabled}
       />
       <TextField
         label="Price"
@@ -40,6 +46,7 @@ export default function CreateProductForm({ form }: CreateProductFormProps) {
         margin="normal"
         error={!!errors.price}
         helperText={errors.price?.message}
+        disabled={disabled}
       />
       <Controller
         name="isAvailable"
@@ -51,12 +58,13 @@ export default function CreateProductForm({ form }: CreateProductFormProps) {
                 {...field}
                 checked={field.value || false}
                 onChange={(e) => field.onChange(e.target.checked)}
+                disabled={disabled}
               />
             }
             label="Is Available"
           />
         )}
       />
-    </>
+    </form>
   );
 }

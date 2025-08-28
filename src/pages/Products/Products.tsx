@@ -15,16 +15,13 @@ const Products = observer(() => {
     productsStore.getProducts();
   }, []);
 
-  if (isLoading) {
-    return <CircularIndeterminate />;
-  }
-
   const handleCreate = () => {
     setOpen(true);
   };
 
   return (
     <>
+      {isLoading && <CircularIndeterminate />}
       <TableHeader
         title="Products"
         onCreate={handleCreate}

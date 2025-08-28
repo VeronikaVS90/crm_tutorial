@@ -1,7 +1,10 @@
-import { object, string, number, boolean, type InferType } from "yup";
+import { object, string, mixed, number, boolean, type InferType } from "yup";
+import { FinanceMonth } from "../../../types/financial";
 
 export const createFinancialSchema = object({
-  month: string().required("Month is required."),
+  month: mixed<FinanceMonth>()
+    .oneOf(Object.values(FinanceMonth))
+    .required("Month is required."),
   isIncome: boolean().required(),
   type: string()
     .required("Type is required.")

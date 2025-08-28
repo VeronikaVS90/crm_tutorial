@@ -9,12 +9,12 @@ export const productColumns: ITableColumn<IProduct>[] = [
   {
     id: "createdAt",
     label: "Created At",
-    row: ({ createdAt }) => dayjs(createdAt).format("DD/MM/YYYY, HH:mm"),
+    cell: ({ createdAt }) => dayjs(createdAt).format("DD/MM/YYYY, HH:mm"),
   },
   {
     id: "isAvailable",
     label: "Is Avaliable",
-    row: (product) => (product.isAvailable ? "Yes" : "No"),
+    cell: (product) => (product.isAvailable ? "Yes" : "No"),
   },
   { id: "price", label: "Price" },
   { id: "rating", label: "Rating" },

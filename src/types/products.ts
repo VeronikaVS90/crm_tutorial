@@ -7,3 +7,10 @@ export interface IProduct {
   price: number;
   rating: number;
 }
+
+export interface ICreateProductBody {
+  category: string;
+  isAvailable: boolean;
+  name: string;
+  price: number;
+}
