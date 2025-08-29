@@ -1,28 +1,72 @@
 import { type UseFormReturn, Controller } from "react-hook-form";
 import { type CreateFinancial } from "./lib";
-
-import { Checkbox, FormControlLabel, TextField } from "@mui/material";
+import { FinanceMonth } from "../../types/financial";
+import {
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
+} from "@mui/material";
 
 interface CreateFinancialFormProps {
   form: UseFormReturn<CreateFinancial>;
 }
 
-export default function CreateProductForm({ form }: CreateFinancialFormProps) {
+export default function CreateFinancialForm({
+  form,
+}: CreateFinancialFormProps) {
   const {
     register,
     control,
     formState: { errors },
   } = form;
 
+  const menuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: 200,
+      },
+    },
+  };
+
   return (
     <>
-      <TextField
-        label="Month"
-        {...register("month")}
-        fullWidth
-        margin="normal"
-        error={!!errors.month}
-        helperText={errors.month?.message}
+      <Controller
+        name="month"
+        control={control}
+        render={({ field }) => (
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="month-select-label">Month</InputLabel>
+
+            <Select
+              labelId="month-select-label"
+              {...field}
+              label="Month"
+              error={!!errors.month}
+              MenuProps={menuProps}
+            >
+              {Object.values(FinanceMonth).map((month) => (
+                <MenuItem key={month} value={month}>
+                  {month}
+                </MenuItem>
+              ))}
+            </Select>
+            {/* <Button
+              variant="outlined"
+              onClick={() => form.setValue("month", "")}
+              sx={{ mt: 1 }}
+            >
+              X
+            </Button> */}
+            {errors.month && (
+              <FormHelperText error>{errors.month.message}</FormHelperText>
+            )}
+          </FormControl>
+        )}
       />
       <TextField
         label="Type"
