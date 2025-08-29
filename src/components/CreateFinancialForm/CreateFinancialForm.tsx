@@ -1,6 +1,4 @@
 import { type UseFormReturn, Controller } from "react-hook-form";
-import { type CreateFinancial } from "./lib";
-import { FinanceMonth } from "../../types/financial";
 import {
   Checkbox,
   FormControlLabel,
@@ -10,14 +8,20 @@ import {
   Select,
   MenuItem,
   FormHelperText,
+  Chip,
 } from "@mui/material";
+import { type CreateFinancial } from "./lib";
+import { FinanceMonth } from "../../types/financial";
+import { MonthColors } from "../../types/financial";
 
 interface CreateFinancialFormProps {
   form: UseFormReturn<CreateFinancial>;
+  disabled: boolean;
 }
 
 export default function CreateFinancialForm({
   form,
+  disabled,
 }: CreateFinancialFormProps) {
   const {
     register,
@@ -34,12 +38,12 @@ export default function CreateFinancialForm({
   };
 
   return (
-    <>
+    <form>
       <Controller
         name="month"
         control={control}
         render={({ field }) => (
-          <FormControl fullWidth margin="normal">
+          <FormControl fullWidth margin="normal" disabled={disabled}>
             <InputLabel id="month-select-label">Month</InputLabel>
 
             <Select
@@ -51,10 +55,19 @@ export default function CreateFinancialForm({
             >
               {Object.values(FinanceMonth).map((month) => (
                 <MenuItem key={month} value={month}>
-                  {month}
+                  <Chip
+                    label={month}
+                    sx={{
+                      backgroundColor: MonthColors[month],
+                      color: "#000",
+                      borderRadius: "16px",
+                      px: 2,
+                    }}
+                  />
                 </MenuItem>
               ))}
             </Select>
+
             {/* <Button
               variant="outlined"
               onClick={() => form.setValue("month", "")}
@@ -75,6 +88,7 @@ export default function CreateFinancialForm({
         margin="normal"
         error={!!errors.type}
         helperText={errors.type?.message}
+        disabled={disabled}
       />
       <TextField
         label="Amount"
@@ -84,6 +98,7 @@ export default function CreateFinancialForm({
         margin="normal"
         error={!!errors.amount}
         helperText={errors.amount?.message}
+        disabled={disabled}
       />
       <Controller
         name="isIncome"
@@ -95,12 +110,13 @@ export default function CreateFinancialForm({
                 {...field}
                 checked={field.value || false}
                 onChange={(e) => field.onChange(e.target.checked)}
+                disabled={disabled}
               />
             }
             label="Is Income"
           />
         )}
       />
-    </>
+    </form>
   );
 }

@@ -13,38 +13,38 @@ import {
   type CreateFinancial,
 } from "../CreateFinancialForm/lib";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { financialStore } from "../../shared/store/financial";
+import { useState } from "react";
+import { handleError } from "../../shared/services/errorHandler";
 
 interface CreateFinancialModalProps {
   open: boolean;
   onClose: () => void;
 }
 
-export default function CreateFinancialModal({
-  open,
-  onClose,
-}: CreateFinancialModalProps) {
+function ModalBody({ onClose }: Pick<CreateFinancialModalProps, "onClose">) {
+  const [isCreating, setIsCreating] = useState(false);
+
   const form = useForm<CreateFinancial>({
     resolver: yupResolver(createFinancialSchema),
   });
-  const onSubmit: SubmitHandler<CreateFinancial> = (data) => {
-    console.log(data);
-    form.reset();
+  const onSubmit: SubmitHandler<CreateFinancial> = async (data) => {
+    try {
+      setIsCreating(true);
+      await financialStore.createFinance(data);
+      form.reset();
+    } catch (err) {
+      handleError(
+        err,
+        "Failed to create transaction. Please, try again later."
+      );
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullWidth
-      maxWidth="sm"
-      sx={{
-        "& .MuiDialog-paper": {
-          borderRadius: 4,
-          padding: 2,
-          backgroundColor: "#fafafa",
-        },
-      }}
-    >
+    <>
       <DialogTitle
         sx={{
           fontWeight: "bold",
@@ -58,11 +58,8 @@ export default function CreateFinancialModal({
       </DialogTitle>
 
       <DialogContent dividers>
-        <Box
-          component="form"
-          sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
-        >
-          <CreateFinancialForm form={form} />
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
+          <CreateFinancialForm form={form} disabled={isCreating} />
         </Box>
       </DialogContent>
       <DialogActions>
@@ -83,6 +80,29 @@ export default function CreateFinancialModal({
           Create
         </Button>
       </DialogActions>
+    </>
+  );
+}
+
+export default function CreateFinancialModal({
+  open,
+  onClose,
+}: CreateFinancialModalProps) {
+  return (
+    <Dialog
+      open={open}
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+      sx={{
+        "& .MuiDialog-paper": {
+          borderRadius: 4,
+          padding: 2,
+          backgroundColor: "#fafafa",
+        },
+      }}
+    >
+      <ModalBody onClose={onClose} />
     </Dialog>
   );
 }

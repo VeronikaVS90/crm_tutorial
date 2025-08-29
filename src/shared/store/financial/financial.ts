@@ -1,6 +1,6 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import { financialService } from "../../services/financial";
-import type { IFinance } from "../../../types/financial";
+import type { ICreateFinanceBody, IFinance } from "../../../types/financial";
 import { handleError } from "../../services/errorHandler";
 
 class FinancialStore {
@@ -32,6 +32,11 @@ class FinancialStore {
         this.isLoading = false;
       });
     }
+  }
+
+  async createFinance(finance: ICreateFinanceBody) {
+    await financialService.createFinance(finance);
+    this.getFinance();
   }
 }
 

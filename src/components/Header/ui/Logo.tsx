@@ -18,7 +18,7 @@ export default function Logo() {
         cursor: "pointer",
       }}
     >
-      LOGO
+      CRM
     </Typography>
   );
 }

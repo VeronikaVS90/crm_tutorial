@@ -15,16 +15,13 @@ const Financial = observer(() => {
     financialStore.getFinance();
   }, []);
 
-  if (isLoading) {
-    return <CircularIndeterminate />;
-  }
-
   const handleCreate = () => {
     setOpen(true);
   };
 
   return (
     <>
+      {isLoading && <CircularIndeterminate />}
       <TableHeader
         title="Financial"
         onCreate={handleCreate}

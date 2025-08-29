@@ -1,4 +1,4 @@
-import type { IFinance } from "../../types/financial";
+import type { ICreateFinanceBody, IFinance } from "../../types/financial";
 import { api } from "./api";
 
 async function getFinance() {
@@ -6,6 +6,12 @@ async function getFinance() {
   return res.data;
 }
 
+async function createFinance(data: ICreateFinanceBody) {
+  const res = await api.post<IFinance[]>("/financial", data);
+  return res.data;
+}
+
 export const financialService = {
   getFinance,
+  createFinance,
 };
