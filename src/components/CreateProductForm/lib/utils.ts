@@ -5,7 +5,7 @@ export const createProductSchema = object({
     .required("Category is required.")
     .min(2, "Category is too short - must be at least 2 charachters")
     .max(30, "Category is too long - must be no more than 30 characters"),
-  isAvailable: boolean().required(),
+  isAvailable: boolean(),
   name: string()
     .required("Name is required.")
     .min(2, "Name is too short - must be at least 2 charachters")
