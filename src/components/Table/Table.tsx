@@ -11,11 +11,13 @@ import type { ITableColumn, ITableRow } from "./lib";
 interface TableProps<T extends ITableRow> {
   columns: ITableColumn<T>[];
   rows: T[];
+  rowOnClick?: (data: T) => void;
 }
 
 export default function Table<T extends ITableRow>({
   columns,
   rows,
+  rowOnClick,
 }: TableProps<T>) {
   //   const [page, setPage] = React.useState(0);
   //   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -57,7 +59,13 @@ export default function Table<T extends ITableRow>({
           <TableBody>
             {rows.map((data) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={data.id}>
+                <TableRow
+                  onClick={() => rowOnClick?.(data)}
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={data.id}
+                >
                   {columns.map((column) => {
                     const value = data[column.id];
                     return (

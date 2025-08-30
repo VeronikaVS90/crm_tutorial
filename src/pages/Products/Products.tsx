@@ -6,10 +6,12 @@ import { Table } from "../../components/Table";
 import { productColumns } from "./lib";
 import { TableHeader } from "../../components/Table";
 import { CreateProductModal } from "../../components/Modal";
+import { useNavigate } from "react-router";
 
 const Products = observer(() => {
   const { products, isLoading } = productsStore;
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     productsStore.getProducts();
@@ -28,7 +30,11 @@ const Products = observer(() => {
         onSearch={() => {}}
       />
 
-      <Table rows={products} columns={productColumns} />
+      <Table
+        rows={products}
+        columns={productColumns}
+        rowOnClick={({ id }) => navigate(`/products/${id}`)}
+      />
 
       <CreateProductModal open={open} onClose={() => setOpen(false)} />
     </>

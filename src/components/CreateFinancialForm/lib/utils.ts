@@ -5,7 +5,7 @@ export const createFinancialSchema = object({
   month: mixed<FinanceMonth>()
     .oneOf(Object.values(FinanceMonth))
     .required("Month is required."),
-  isIncome: boolean(),
+  income: boolean(),
   type: string()
     .required("Type is required.")
     .min(2, "Type is too short - must be at least 2 charachters")

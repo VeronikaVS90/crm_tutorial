@@ -6,6 +6,11 @@ async function getProducts() {
   return res.data;
 }
 
+async function getProductById(productId: string) {
+  const res = await api.get<IProduct>(`/products/${productId}`);
+  return res.data;
+}
+
 async function createProduct(data: ICreateProductBody) {
   const res = await api.post<IProduct>("/products", data);
   return res.data;
@@ -14,4 +19,5 @@ async function createProduct(data: ICreateProductBody) {
 export const productsService = {
   getProducts,
   createProduct,
+  getProductById,
 };

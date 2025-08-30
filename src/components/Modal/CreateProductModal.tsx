@@ -6,12 +6,9 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import CreateProductForm from "../CreateProductForm";
+import CreateProductForm from "../ProductForm";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import {
-  createProductSchema,
-  type CreateProduct,
-} from "../CreateProductForm/lib";
+import { productSchema, type ProductFormType } from "../ProductForm/lib";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { productsStore } from "../../shared/store/products";
 import { useState } from "react";
@@ -25,10 +22,10 @@ interface CreateProductModalProps {
 function ModalBody({ onClose }: Pick<CreateProductModalProps, "onClose">) {
   const [isCreating, setIsCreating] = useState(false);
 
-  const form = useForm<CreateProduct>({
-    resolver: yupResolver(createProductSchema),
+  const form = useForm<ProductFormType>({
+    resolver: yupResolver(productSchema),
   });
-  const onSubmit: SubmitHandler<CreateProduct> = async (data) => {
+  const onSubmit: SubmitHandler<ProductFormType> = async (data) => {
     try {
       setIsCreating(true);
       await productsStore.createProduct(data);

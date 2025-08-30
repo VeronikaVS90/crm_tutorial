@@ -4,6 +4,7 @@ import RootLayout from "./components/RootLayout/RootLayout";
 
 const HomePage = lazy(() => import("./pages/Home"));
 const ProductsPage = lazy(() => import("./pages/Products"));
+const ProductDetailsPage = lazy(() => import("./pages/ProductDetails"));
 const FinancialPage = lazy(() => import("./pages/Financial"));
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Route element={<RootLayout />}>
         <Route index element={<HomePage />} />
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products/:productId" element={<ProductDetailsPage />} />
         <Route path="/financial" element={<FinancialPage />} />
       </Route>
     </Routes>

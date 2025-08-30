@@ -8,11 +8,10 @@ import {
   Select,
   MenuItem,
   FormHelperText,
-  Chip,
 } from "@mui/material";
 import { type CreateFinancial } from "./lib";
 import { FinanceMonth } from "../../types/financial";
-import { MonthColors } from "../../types/financial";
+import MonthBadge from "../../shared/ui/MonthBadge";
 
 interface CreateFinancialFormProps {
   form: UseFormReturn<CreateFinancial>;
@@ -44,7 +43,9 @@ export default function CreateFinancialForm({
         control={control}
         render={({ field }) => (
           <FormControl fullWidth margin="normal" disabled={disabled}>
-            <InputLabel id="month-select-label">Month</InputLabel>
+            <InputLabel required id="month-select-label">
+              Month
+            </InputLabel>
 
             <Select
               labelId="month-select-label"
@@ -52,29 +53,15 @@ export default function CreateFinancialForm({
               label="Month"
               error={!!errors.month}
               MenuProps={menuProps}
+              value={field.value ?? ""}
             >
               {Object.values(FinanceMonth).map((month) => (
                 <MenuItem key={month} value={month}>
-                  <Chip
-                    label={month}
-                    sx={{
-                      backgroundColor: MonthColors[month],
-                      color: "#000",
-                      borderRadius: "16px",
-                      px: 2,
-                    }}
-                  />
+                  <MonthBadge month={month} />
                 </MenuItem>
               ))}
             </Select>
 
-            {/* <Button
-              variant="outlined"
-              onClick={() => form.setValue("month", "")}
-              sx={{ mt: 1 }}
-            >
-              X
-            </Button> */}
             {errors.month && (
               <FormHelperText error>{errors.month.message}</FormHelperText>
             )}

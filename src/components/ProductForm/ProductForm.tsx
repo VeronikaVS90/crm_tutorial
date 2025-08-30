@@ -1,17 +1,14 @@
 import { type UseFormReturn, Controller } from "react-hook-form";
-import { type CreateProduct } from "./lib";
+import { type ProductFormType } from "./lib";
 
 import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 
-interface CreateProductFormProps {
-  form: UseFormReturn<CreateProduct>;
+interface ProductFormProps {
+  form: UseFormReturn<ProductFormType>;
   disabled: boolean;
 }
 
-export default function CreateProductForm({
-  form,
-  disabled,
-}: CreateProductFormProps) {
+export default function ProductForm({ form, disabled }: ProductFormProps) {
   const {
     register,
     control,
