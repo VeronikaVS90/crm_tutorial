@@ -72,7 +72,7 @@ function ModalBody({ onClose }: Pick<CreateFinancialModalProps, "onClose">) {
           Cancel
         </Button>
         <Button
-          type="button"
+          type="submit"
           variant="contained"
           onClick={form.handleSubmit(onSubmit)}
           sx={{ borderRadius: 2 }}

@@ -88,7 +88,7 @@ export default function CreateFinancialForm({
         disabled={disabled}
       />
       <Controller
-        name="isIncome"
+        name="income"
         control={control}
         render={({ field }) => (
           <FormControlLabel
