@@ -6,6 +6,11 @@ async function getFinance() {
   return res.data;
 }
 
+async function getFinanceById(financeId: string) {
+  const res = await api.get<IFinance>(`/financial/${financeId}`);
+  return res.data;
+}
+
 async function createFinance(data: ICreateFinanceBody) {
   const res = await api.post<IFinance[]>("/financial", data);
   return res.data;
@@ -13,5 +18,6 @@ async function createFinance(data: ICreateFinanceBody) {
 
 export const financialService = {
   getFinance,
+  getFinanceById,
   createFinance,
 };

@@ -18,7 +18,7 @@ export interface IFinance {
   month: FinanceMonth;
   type: string;
   transactions: number;
-  income: number;
+  income: boolean;
   outcome: number;
   profit: number;
 }
@@ -26,7 +26,7 @@ export interface IFinance {
 export interface ICreateFinanceBody {
   month: FinanceMonth;
   type: string;
-  income: number;
+  income: boolean;
   outcome: number;
   profit: number;
 }

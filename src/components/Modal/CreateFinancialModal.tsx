@@ -6,12 +6,9 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import CreateFinancialForm from "../CreateFinancialForm";
+import FinancialForm from "../FinancialForm";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import {
-  createFinancialSchema,
-  type CreateFinancial,
-} from "../CreateFinancialForm/lib";
+import { financialSchema, type FinancialFormType } from "../FinancialForm/lib";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { financialStore } from "../../shared/store/financial";
 import { useState } from "react";
@@ -25,10 +22,10 @@ interface CreateFinancialModalProps {
 function ModalBody({ onClose }: Pick<CreateFinancialModalProps, "onClose">) {
   const [isCreating, setIsCreating] = useState(false);
 
-  const form = useForm<CreateFinancial>({
-    resolver: yupResolver(createFinancialSchema),
+  const form = useForm<FinancialFormType>({
+    resolver: yupResolver(financialSchema),
   });
-  const onSubmit: SubmitHandler<CreateFinancial> = async (data) => {
+  const onSubmit: SubmitHandler<FinancialFormType> = async (data) => {
     try {
       setIsCreating(true);
       await financialStore.createFinance(data);
@@ -59,7 +56,7 @@ function ModalBody({ onClose }: Pick<CreateFinancialModalProps, "onClose">) {
 
       <DialogContent dividers>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
-          <CreateFinancialForm form={form} disabled={isCreating} />
+          <FinancialForm form={form} disabled={isCreating} />
         </Box>
       </DialogContent>
       <DialogActions>

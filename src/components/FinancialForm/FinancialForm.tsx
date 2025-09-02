@@ -9,19 +9,16 @@ import {
   MenuItem,
   FormHelperText,
 } from "@mui/material";
-import { type CreateFinancial } from "./lib";
+import { type FinancialFormType } from "./lib";
 import { FinanceMonth } from "../../types/financial";
 import MonthBadge from "../../shared/ui/MonthBadge";
 
-interface CreateFinancialFormProps {
-  form: UseFormReturn<CreateFinancial>;
+interface FinancialFormProps {
+  form: UseFormReturn<FinancialFormType>;
   disabled: boolean;
 }
 
-export default function CreateFinancialForm({
-  form,
-  disabled,
-}: CreateFinancialFormProps) {
+export default function FinancialForm({ form, disabled }: FinancialFormProps) {
   const {
     register,
     control,
@@ -78,13 +75,13 @@ export default function CreateFinancialForm({
         disabled={disabled}
       />
       <TextField
-        label="Amount"
+        label="Transactions"
         type="number"
-        {...register("amount")}
+        {...register("transactions")}
         fullWidth
         margin="normal"
-        error={!!errors.amount}
-        helperText={errors.amount?.message}
+        error={!!errors.transactions}
+        helperText={errors.transactions?.message}
         disabled={disabled}
       />
       <Controller

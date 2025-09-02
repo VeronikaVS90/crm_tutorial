@@ -6,10 +6,12 @@ import { Table } from "../../components/Table";
 import { financialColumns } from "./lib";
 import { TableHeader } from "../../components/Table";
 import { CreateFinancialModal } from "../../components/Modal";
+import { useNavigate } from "react-router";
 
 const Financial = observer(() => {
   const { financial, isLoading } = financialStore;
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     financialStore.getFinance();
@@ -27,7 +29,11 @@ const Financial = observer(() => {
         onCreate={handleCreate}
         onSearch={() => {}}
       />
-      <Table rows={financial} columns={financialColumns} />
+      <Table
+        rows={financial}
+        columns={financialColumns}
+        rowOnClick={({ id }) => navigate(`/financial/${id}`)}
+      />
 
       <CreateFinancialModal open={open} onClose={() => setOpen(false)} />
     </>

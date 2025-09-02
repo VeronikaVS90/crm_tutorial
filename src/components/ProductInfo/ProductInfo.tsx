@@ -34,13 +34,15 @@ export default function ProductInfo({ product }: ProductInfoProps) {
     <>
       <DialogContent>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          <Typography variant="body2">
+          <Typography variant="body1">
             <strong>Product ID:</strong> {product.id}
           </Typography>
-          <Typography variant="body2">
+
+          <Typography variant="body1">
             <strong>Created At:</strong>{" "}
             {new Date(product.createdAt).toLocaleString()}
           </Typography>
+
           <Chip
             label={`Rating: ${product.rating}`}
             color={
@@ -53,6 +55,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             variant="outlined"
             sx={{ width: "fit-content" }}
           />
+
           <ProductForm disabled form={form} />
         </Box>
       </DialogContent>
