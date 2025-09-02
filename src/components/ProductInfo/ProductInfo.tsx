@@ -8,14 +8,18 @@ import {
   Button,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  Typography,
+  Chip,
 } from "@mui/material";
+import { useNavigate } from "react-router";
 
 interface ProductInfoProps {
   product: IProduct;
 }
 
 export default function ProductInfo({ product }: ProductInfoProps) {
+  const navigate = useNavigate();
+
   const form = useForm<ProductFormType>({
     resolver: yupResolver(productSchema),
     defaultValues: {
@@ -28,26 +32,37 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
   return (
     <>
-      <DialogTitle
-        sx={{
-          fontWeight: "bold",
-          fontSize: "1.25rem",
-          textAlign: "start",
-          textTransform: "uppercase",
-          pb: 1,
-        }}
-      >
-        Product id:
-      </DialogTitle>
       <DialogContent>
-        <Box>
-          <div>Created at:</div>
-          <div>Rating:</div>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          <Typography variant="body2">
+            <strong>Product ID:</strong> {product.id}
+          </Typography>
+          <Typography variant="body2">
+            <strong>Created At:</strong>{" "}
+            {new Date(product.createdAt).toLocaleString()}
+          </Typography>
+          <Chip
+            label={`Rating: ${product.rating}`}
+            color={
+              product.rating >= 40
+                ? "success"
+                : product.rating >= 20
+                ? "warning"
+                : "error"
+            }
+            variant="outlined"
+            sx={{ width: "fit-content" }}
+          />
           <ProductForm disabled form={form} />
         </Box>
       </DialogContent>
       <DialogActions sx={{ justifyContent: "space-between" }}>
-        <Button type="button" variant="outlined" sx={{ borderRadius: 2 }}>
+        <Button
+          onClick={() => navigate("/products")}
+          type="button"
+          variant="outlined"
+          sx={{ borderRadius: 2 }}
+        >
           Go back
         </Button>
 
