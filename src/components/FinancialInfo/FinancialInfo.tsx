@@ -8,14 +8,16 @@ import {
   Button,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router";
 
 interface FinancialInfoProps {
   finance: IFinance;
 }
 
 export default function FinancialInfo({ finance }: FinancialInfoProps) {
+  const navigate = useNavigate();
   const form = useForm<FinancialFormType>({
     resolver: yupResolver(financialSchema),
     defaultValues: {
@@ -28,25 +30,25 @@ export default function FinancialInfo({ finance }: FinancialInfoProps) {
 
   return (
     <>
-      <DialogTitle
-        sx={{
-          fontWeight: "bold",
-          fontSize: "1.25rem",
-          textAlign: "start",
-          textTransform: "uppercase",
-          pb: 1,
-        }}
-      >
-        Transaction id:
-      </DialogTitle>
       <DialogContent>
-        <Box>
-          <div>Profit:</div>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          <Typography variant="body1">
+            <strong>Transaction ID:</strong> {finance.id}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Profit:</strong> {finance.profit}
+          </Typography>
+
           <FinancialForm disabled form={form} />
         </Box>
       </DialogContent>
       <DialogActions sx={{ justifyContent: "space-between" }}>
-        <Button type="button" variant="outlined" sx={{ borderRadius: 2 }}>
+        <Button
+          onClick={() => navigate("/financial")}
+          type="button"
+          variant="outlined"
+          sx={{ borderRadius: 2 }}
+        >
           Go back
         </Button>
 
