@@ -18,15 +18,18 @@ export interface IFinance {
   month: FinanceMonth;
   type: string;
   transactions: number;
-  income: boolean;
+  income: number;
   outcome: number;
   profit: number;
+  averageCheck: number;
+  comment: string;
 }
 
 export interface ICreateFinanceBody {
   month: FinanceMonth;
   type: string;
-  income: boolean;
+  transactions: number;
+  income: number;
   outcome: number;
-  profit: number;
+  comment: string;
 }

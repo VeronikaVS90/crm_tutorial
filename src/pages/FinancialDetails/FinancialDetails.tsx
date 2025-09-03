@@ -24,7 +24,7 @@ export default function FinancialDetails() {
         setError(error);
         handleError(
           error,
-          "Failed to load financial information. Please, try again later."
+          "Failed to load financial calculation. Please, try again later."
         );
       } finally {
         setIsLoading(false);

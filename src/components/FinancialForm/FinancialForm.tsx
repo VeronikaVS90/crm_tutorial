@@ -1,7 +1,5 @@
 import { type UseFormReturn, Controller } from "react-hook-form";
 import {
-  Checkbox,
-  FormControlLabel,
   TextField,
   FormControl,
   InputLabel,
@@ -66,7 +64,7 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
         )}
       />
       <TextField
-        label="Type"
+        label="Type (e.g. sales, advertising, rental)"
         {...register("type")}
         fullWidth
         margin="normal"
@@ -75,7 +73,7 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
         disabled={disabled}
       />
       <TextField
-        label="Transactions"
+        label="Transactions (amount)"
         type="number"
         {...register("transactions")}
         fullWidth
@@ -84,22 +82,34 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
         helperText={errors.transactions?.message}
         disabled={disabled}
       />
-      <Controller
-        name="income"
-        control={control}
-        render={({ field }) => (
-          <FormControlLabel
-            control={
-              <Checkbox
-                {...field}
-                checked={field.value || false}
-                onChange={(e) => field.onChange(e.target.checked)}
-                disabled={disabled}
-              />
-            }
-            label="Is Income"
-          />
-        )}
+      <TextField
+        label="Income"
+        type="number"
+        {...register("income")}
+        fullWidth
+        margin="normal"
+        error={!!errors.income}
+        helperText={errors.income?.message}
+        disabled={disabled}
+      />
+      <TextField
+        label="Outcome"
+        type="number"
+        {...register("outcome")}
+        fullWidth
+        margin="normal"
+        error={!!errors.outcome}
+        helperText={errors.outcome?.message}
+        disabled={disabled}
+      />
+      <TextField
+        label="Comment"
+        {...register("comment")}
+        fullWidth
+        margin="normal"
+        error={!!errors.comment}
+        helperText={errors.comment?.message}
+        disabled={disabled}
       />
     </form>
   );

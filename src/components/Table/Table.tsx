@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 // import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import type { ITableColumn, ITableRow } from "./lib";
+import Tooltip from "@mui/material/Tooltip";
 
 interface TableProps<T extends ITableRow> {
   columns: ITableColumn<T>[];
@@ -51,7 +52,26 @@ export default function Table<T extends ITableRow>({
                     boxShadow: "inset 0 -1px 0 #ddd",
                   }}
                 >
-                  {column.label}
+                  {column.headerTooltip ? (
+                    <Tooltip
+                      title={column.headerTooltip}
+                      arrow
+                      enterDelay={400}
+                    >
+                      <span
+                        style={{
+                          cursor: "pointer",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 6,
+                        }}
+                      >
+                        {column.label}
+                      </span>
+                    </Tooltip>
+                  ) : (
+                    column.label
+                  )}
                 </TableCell>
               ))}
             </TableRow>

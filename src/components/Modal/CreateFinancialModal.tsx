@@ -33,7 +33,7 @@ function ModalBody({ onClose }: Pick<CreateFinancialModalProps, "onClose">) {
     } catch (err) {
       handleError(
         err,
-        "Failed to create transaction. Please, try again later."
+        "Failed to create calculation. Please, try again later."
       );
     } finally {
       setIsCreating(false);
@@ -51,7 +51,7 @@ function ModalBody({ onClose }: Pick<CreateFinancialModalProps, "onClose">) {
           pb: 1,
         }}
       >
-        Create a transaction
+        Create a calculation
       </DialogTitle>
 
       <DialogContent dividers>

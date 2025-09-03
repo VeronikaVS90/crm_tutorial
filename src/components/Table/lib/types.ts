@@ -3,6 +3,7 @@ export interface ITableColumn<T extends ITableRow = ITableRow> {
   label: string;
   minWidth?: number;
   cell?: (data: T) => React.ReactNode;
+  headerTooltip?: string | React.ReactNode;
 }
 
 export interface ITableRow {

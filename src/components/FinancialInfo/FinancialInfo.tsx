@@ -23,8 +23,10 @@ export default function FinancialInfo({ finance }: FinancialInfoProps) {
     defaultValues: {
       month: finance.month,
       income: finance.income,
+      outcome: finance.outcome,
       type: finance.type,
       transactions: finance.transactions,
+      comment: finance.comment,
     },
   });
 
@@ -33,7 +35,10 @@ export default function FinancialInfo({ finance }: FinancialInfoProps) {
       <DialogContent>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <Typography variant="body1">
-            <strong>Transaction ID:</strong> {finance.id}
+            <strong>Calculation ID:</strong> {finance.id}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Average check:</strong> {finance.averageCheck}
           </Typography>
           <Typography variant="body1">
             <strong>Profit:</strong> {finance.profit}

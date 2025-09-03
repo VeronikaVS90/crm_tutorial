@@ -10,8 +10,18 @@ export const financialColumns: ITableColumn<IFinance>[] = [
     cell: ({ month }) => <MonthBadge month={month} />,
   },
   { id: "type", label: "Type" },
-  { id: "transactions", label: "Transactions" },
+  {
+    id: "transactions",
+    label: "Transactions",
+    headerTooltip: "Amount of transactions",
+  },
   { id: "income", label: "Income" },
   { id: "outcome", label: "Outcome" },
-  { id: "profit", label: "Profit" },
+  { id: "profit", label: "Profit", headerTooltip: "Income - Outcome" },
+  {
+    id: "averageCheck",
+    label: "Average Check",
+    headerTooltip: "Income / Transactions",
+  },
+  { id: "comment", label: "Comment" },
 ];
