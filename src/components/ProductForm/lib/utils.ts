@@ -1,10 +1,10 @@
-import { object, string, number, boolean, type InferType } from "yup";
+import { object, string, number, boolean, type InferType, mixed } from "yup";
+import { ProductCategory } from "../../../types/products";
 
 export const productSchema = object({
-  category: string()
-    .required("Category is required.")
-    .min(2, "Category is too short - must be at least 2 charachters")
-    .max(30, "Category is too long - must be no more than 30 characters"),
+  category: mixed<ProductCategory>()
+    .oneOf(Object.values(ProductCategory) as ProductCategory[])
+    .required("Category is required."),
   isAvailable: boolean().default(false),
   name: string()
     .required("Name is required.")

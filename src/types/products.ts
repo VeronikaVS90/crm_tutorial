@@ -1,6 +1,16 @@
+export enum ProductCategory {
+  Electronics = "Electronics",
+  Clothing = "Clothing",
+  Footwear = "Footwear",
+  Home = "Home",
+  Health = "Health",
+  Sports = "Sports",
+  Children = "Children",
+}
+
 export interface IProduct {
   id: string;
-  category: string;
+  category: ProductCategory;
   createdAt: string;
   isAvailable: boolean;
   name: string;
@@ -9,7 +19,7 @@ export interface IProduct {
 }
 
 export interface ICreateProductBody {
-  category: string;
+  category: ProductCategory;
   isAvailable: boolean;
   name: string;
   price: number;
