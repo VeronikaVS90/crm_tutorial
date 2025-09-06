@@ -9,6 +9,7 @@ export const financialColumns: ITableColumn<IFinance>[] = [
     label: "Month",
     cell: ({ month }) => <MonthBadge month={month} />,
   },
+  { id: "year", label: "Year" },
   { id: "type", label: "Type" },
   {
     id: "transactions",

@@ -6,9 +6,10 @@ import {
   Select,
   MenuItem,
   FormHelperText,
+  Box,
 } from "@mui/material";
 import { type FinancialFormType } from "./lib";
-import { FinanceMonth } from "../../types/financial";
+import { FinanceMonth, type FinanceYear } from "../../types/financial";
 import MonthBadge from "../../shared/ui/MonthBadge";
 
 interface FinancialFormProps {
@@ -31,38 +32,78 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
     },
   };
 
+  const years: number[] = Array.from(
+    { length: 2035 - 2025 + 1 },
+    (_, i) => 2025 + i
+  );
+
   return (
     <form>
-      <Controller
-        name="month"
-        control={control}
-        render={({ field }) => (
-          <FormControl fullWidth margin="normal" disabled={disabled}>
-            <InputLabel required id="month-select-label">
-              Month
-            </InputLabel>
+      <Box display="flex" gap={2}>
+        <Controller
+          name="month"
+          control={control}
+          render={({ field }) => (
+            <FormControl fullWidth margin="normal" disabled={disabled}>
+              <InputLabel required id="month-select-label">
+                Month
+              </InputLabel>
 
-            <Select
-              labelId="month-select-label"
-              {...field}
-              label="Month"
-              error={!!errors.month}
-              MenuProps={menuProps}
-              value={field.value ?? ""}
-            >
-              {Object.values(FinanceMonth).map((month) => (
-                <MenuItem key={month} value={month}>
-                  <MonthBadge month={month} />
-                </MenuItem>
-              ))}
-            </Select>
+              <Select
+                labelId="month-select-label"
+                {...field}
+                label="Month"
+                error={!!errors.month}
+                MenuProps={menuProps}
+                value={field.value ?? ""}
+              >
+                {Object.values(FinanceMonth).map((month) => (
+                  <MenuItem key={month} value={month}>
+                    <MonthBadge month={month} />
+                  </MenuItem>
+                ))}
+              </Select>
 
-            {errors.month && (
-              <FormHelperText error>{errors.month.message}</FormHelperText>
-            )}
-          </FormControl>
-        )}
-      />
+              {errors.month && (
+                <FormHelperText error>{errors.month.message}</FormHelperText>
+              )}
+            </FormControl>
+          )}
+        />
+
+        <Controller
+          name="year"
+          control={control}
+          render={({ field }) => (
+            <FormControl fullWidth margin="normal" disabled={disabled}>
+              <InputLabel required id="year-select-label">
+                Year
+              </InputLabel>
+              <Select
+                labelId="year-select-label"
+                {...field}
+                label="Year"
+                error={!!errors.year}
+                MenuProps={menuProps}
+                value={field.value ?? ""}
+                onChange={(e) =>
+                  field.onChange(Number(e.target.value) as FinanceYear)
+                }
+              >
+                {years.map((year) => (
+                  <MenuItem key={year} value={year}>
+                    {year}
+                  </MenuItem>
+                ))}
+              </Select>
+              {errors.year && (
+                <FormHelperText error>{errors.year.message}</FormHelperText>
+              )}
+            </FormControl>
+          )}
+        />
+      </Box>
+
       <TextField
         label="Type (e.g. sales, advertising, rental)"
         {...register("type")}
