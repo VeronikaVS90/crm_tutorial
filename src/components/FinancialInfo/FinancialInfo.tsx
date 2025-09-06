@@ -22,6 +22,7 @@ export default function FinancialInfo({ finance }: FinancialInfoProps) {
     resolver: yupResolver(financialSchema),
     defaultValues: {
       month: finance.month,
+      year: finance.year,
       income: finance.income,
       outcome: finance.outcome,
       type: finance.type,
