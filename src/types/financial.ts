@@ -26,6 +26,20 @@ export type FinanceYear =
   | 2034
   | 2035;
 
+export enum TransactionType {
+  Sale = "Sale", // Sale of products (income)
+  Return = "Return", // Return of products (outcome)
+  Purchase = "Purchase", // Purchase of products (outcome)
+  Expense = "Expense", // Operatiтп expenses (outcome)
+  Refund = "Refund", // Returning money to client (outcome)
+  Shipping = "Shipping", // Customer pays for delivery, but company pays courier (mixed)
+  Preorder = "Preorder", // Customer pays in advance, company spends on production/purchase (mixed)
+  Dropshipping = "Dropshipping", // Customer pays, money goes to supplier (mixed)
+  Comission = "Comission", // Income from sales minus marketplace/bank commission (mixed)
+  Subscription = "Subscription", // Recurring payment: customer pays, company covers service costs (mixed)
+  Other = "Other", // Other category
+}
+
 export interface IFinance {
   id: string;
   month: FinanceMonth;

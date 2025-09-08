@@ -5,7 +5,7 @@ export enum ProductCategory {
   Home = "Home",
   Health = "Health",
   Sports = "Sports",
-  Children = "Children",
+  Kids = "Kids",
 }
 
 export interface IProduct {

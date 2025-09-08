@@ -9,7 +9,11 @@ import {
   Box,
 } from "@mui/material";
 import { type FinancialFormType } from "./lib";
-import { FinanceMonth, type FinanceYear } from "../../types/financial";
+import {
+  FinanceMonth,
+  type FinanceYear,
+  TransactionType,
+} from "../../types/financial";
 import MonthBadge from "../../shared/ui/MonthBadge";
 
 interface FinancialFormProps {
@@ -104,14 +108,35 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
         />
       </Box>
 
-      <TextField
-        label="Type (e.g. sales, advertising, rental)"
-        {...register("type")}
-        fullWidth
-        margin="normal"
-        error={!!errors.type}
-        helperText={errors.type?.message}
-        disabled={disabled}
+      <Controller
+        name="type"
+        control={control}
+        render={({ field }) => (
+          <FormControl fullWidth margin="normal" disabled={disabled}>
+            <InputLabel required id="month-select-label">
+              Type
+            </InputLabel>
+
+            <Select
+              labelId="type-select-label"
+              {...field}
+              label="Type"
+              error={!!errors.type}
+              MenuProps={menuProps}
+              value={field.value ?? ""}
+            >
+              {Object.values(TransactionType).map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+
+            {errors.month && (
+              <FormHelperText error>{errors.month.message}</FormHelperText>
+            )}
+          </FormControl>
+        )}
       />
       <TextField
         label="Transactions (amount)"
