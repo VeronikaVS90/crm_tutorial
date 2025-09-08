@@ -10,6 +10,9 @@ export const productSchema = object({
     .required("Name is required.")
     .min(2, "Name is too short - must be at least 2 charachters")
     .max(30, "Name is too long - must be no more than 30 characters"),
+  amount: number()
+    .required("Amount is required")
+    .min(0, "Amount must be greater than or equal to 0"),
   price: number()
     .transform((value, originalValue) =>
       originalValue === "" ? undefined : value

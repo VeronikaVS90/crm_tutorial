@@ -14,7 +14,6 @@ import { ProductCategory } from "../../types/products";
 
 interface ProductFormProps {
   form: UseFormReturn<ProductFormType>;
-  category: ProductCategory;
   disabled: boolean;
 }
 
@@ -73,6 +72,16 @@ export default function ProductForm({ form, disabled }: ProductFormProps) {
             )}
           </FormControl>
         )}
+      />
+      <TextField
+        label="Amount"
+        type="number"
+        {...register("amount")}
+        fullWidth
+        margin="normal"
+        error={!!errors.amount}
+        helperText={errors.amount?.message}
+        disabled={disabled}
       />
       <TextField
         label="Price"

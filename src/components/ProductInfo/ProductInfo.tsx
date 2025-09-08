@@ -26,6 +26,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       category: product.category,
       isAvailable: product.isAvailable,
       name: product.name,
+      amount: product.amount,
       price: product.price,
     },
   });
@@ -41,6 +42,10 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           <Typography variant="body1">
             <strong>Created At:</strong>{" "}
             {new Date(product.createdAt).toLocaleString()}
+          </Typography>
+
+          <Typography variant="body1">
+            <strong>Cost:</strong> {product.cost}
           </Typography>
 
           <Chip

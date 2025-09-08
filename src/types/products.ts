@@ -14,7 +14,9 @@ export interface IProduct {
   createdAt: string;
   isAvailable: boolean;
   name: string;
+  amount: number;
   price: number;
+  cost: number;
   rating: number;
 }
 
@@ -22,5 +24,6 @@ export interface ICreateProductBody {
   category: ProductCategory;
   isAvailable: boolean;
   name: string;
+  amount: number;
   price: number;
 }
