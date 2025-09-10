@@ -125,7 +125,17 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
               MenuProps={menuProps}
               value={field.value ?? ""}
             >
-              {Object.values(TransactionType).map((type) => (
+              {[
+                ...new Set(
+                  [
+                    ...Object.values(TransactionType),
+                    field.value &&
+                    !Object.values(TransactionType).includes(field.value)
+                      ? field.value
+                      : null,
+                  ].filter(Boolean) as string[]
+                ),
+              ].map((type) => (
                 <MenuItem key={type} value={type}>
                   {type}
                 </MenuItem>
