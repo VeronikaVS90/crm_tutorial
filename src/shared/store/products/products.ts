@@ -1,6 +1,10 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import { productsService } from "../../services/products";
-import type { ICreateProductBody, IProduct } from "../../../types/products";
+import type {
+  ICreateProductBody,
+  IProduct,
+  IUpdateProductBody,
+} from "../../../types/products";
 import { handleError } from "../../services/errorHandler";
 
 class ProductsStore {
@@ -33,6 +37,16 @@ class ProductsStore {
 
   async createProduct(product: ICreateProductBody) {
     await productsService.createProduct(product);
+    this.getProducts();
+  }
+
+  async updateProduct(product: IUpdateProductBody) {
+    await productsService.updateProduct(product);
+    this.getProducts();
+  }
+
+  async deleteProduct(productId: string) {
+    await productsService.deleteProduct(productId);
     this.getProducts();
   }
 }

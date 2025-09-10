@@ -1,4 +1,8 @@
-import type { ICreateProductBody, IProduct } from "../../types/products";
+import type {
+  ICreateProductBody,
+  IProduct,
+  IUpdateProductBody,
+} from "../../types/products";
 import { api } from "./api";
 
 async function getProducts() {
@@ -16,8 +20,19 @@ async function createProduct(data: ICreateProductBody) {
   return res.data;
 }
 
+async function updateProduct({ id, ...data }: IUpdateProductBody) {
+  const res = await api.put<IProduct>(`/products/${id}`, data);
+  return res.data;
+}
+
+async function deleteProduct(productId: string) {
+  await api.delete(`/products/${productId}`);
+}
+
 export const productsService = {
   getProducts,
   createProduct,
   getProductById,
+  updateProduct,
+  deleteProduct,
 };

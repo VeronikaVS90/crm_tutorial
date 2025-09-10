@@ -27,3 +27,7 @@ export interface ICreateProductBody {
   amount: number;
   price: number;
 }
+
+export interface IUpdateProductBody extends ICreateProductBody {
+  id: string;
+}

@@ -1,23 +1,28 @@
-import { useForm } from "react-hook-form";
-import type { IProduct } from "../../types/products";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import type { IProduct, IUpdateProductBody } from "../../types/products";
 import ProductForm from "../ProductForm/ProductForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { productSchema, type ProductFormType } from "../ProductForm/lib";
-import {
-  Box,
-  Button,
-  DialogActions,
-  DialogContent,
-  Typography,
-  Chip,
-} from "@mui/material";
+import { Box, Button, DialogActions, Typography, Chip } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router";
+import { useState } from "react";
+import { handleError } from "../../shared/services/errorHandler";
 
 interface ProductInfoProps {
   product: IProduct;
+  onUpdateProduct: (data: IUpdateProductBody) => Promise<never | void>;
+  onDeleteProduct: (productId: string) => Promise<void>;
 }
 
-export default function ProductInfo({ product }: ProductInfoProps) {
+export default function ProductInfo({
+  product,
+  onUpdateProduct,
+  onDeleteProduct,
+}: ProductInfoProps) {
+  const [editMode, setEditMode] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
 
   const form = useForm<ProductFormType>({
@@ -31,39 +36,71 @@ export default function ProductInfo({ product }: ProductInfoProps) {
     },
   });
 
+  const handleEnableForm = () => {
+    setEditMode(true);
+  };
+
+  const handleResetForm = () => {
+    setEditMode(false);
+    form.reset({
+      category: product.category,
+      isAvailable: product.isAvailable,
+      name: product.name,
+      amount: product.amount,
+      price: product.price,
+    });
+  };
+
+  const handleSubmitForm: SubmitHandler<ProductFormType> = async (data) => {
+    try {
+      setIsUpdating(true);
+      await onUpdateProduct({ ...data, id: product.id });
+      setEditMode(false);
+    } catch (err) {
+      handleError(err, "Failed to create product. Please, try again later.");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleDeleteProduct = async () => {
+    setIsDeleting(true);
+    await onDeleteProduct(product.id);
+    setIsDeleting(false);
+  };
+
   return (
     <>
-      <DialogContent>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          <Typography variant="body1">
-            <strong>Product ID:</strong> {product.id}
-          </Typography>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+        <Typography variant="body1">
+          <strong>Product ID:</strong> {product.id}
+        </Typography>
 
-          <Typography variant="body1">
-            <strong>Created At:</strong>{" "}
-            {new Date(product.createdAt).toLocaleString()}
-          </Typography>
+        <Typography variant="body1">
+          <strong>Created At:</strong>{" "}
+          {new Date(product.createdAt).toLocaleString()}
+        </Typography>
 
-          <Typography variant="body1">
-            <strong>Cost:</strong> {product.cost}
-          </Typography>
+        <Typography variant="body1">
+          <strong>Cost:</strong> {product.cost}
+        </Typography>
 
-          <Chip
-            label={`Rating: ${product.rating}`}
-            color={
-              product.rating >= 40
-                ? "success"
-                : product.rating >= 20
-                ? "warning"
-                : "error"
-            }
-            variant="outlined"
-            sx={{ width: "fit-content" }}
-          />
+        <Chip
+          label={`Rating: ${product.rating}`}
+          color={
+            product.rating >= 40
+              ? "success"
+              : product.rating >= 20
+              ? "warning"
+              : "error"
+          }
+          variant="outlined"
+          sx={{ width: "fit-content" }}
+        />
 
-          <ProductForm disabled form={form} />
-        </Box>
-      </DialogContent>
+        <ProductForm disabled={!editMode || isUpdating} form={form} />
+      </Box>
+
       <DialogActions sx={{ justifyContent: "space-between" }}>
         <Button
           onClick={() => navigate("/products")}
@@ -75,13 +112,44 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         </Button>
 
         <Box sx={{ display: "flex", gap: 1 }}>
-          <Button variant="contained" sx={{ borderRadius: 2 }}>
-            Update
-          </Button>
-          <Button variant="outlined" sx={{ borderRadius: 2 }}>
-            Reset
-          </Button>
-          <Button variant="contained" color="error" sx={{ borderRadius: 2 }}>
+          {editMode && (
+            <Button
+              onClick={form.handleSubmit(handleSubmitForm)}
+              variant="contained"
+              sx={{ borderRadius: 2 }}
+              disabled={isUpdating}
+            >
+              Save
+            </Button>
+          )}
+          {!editMode && (
+            <Button
+              onClick={handleEnableForm}
+              startIcon={<EditIcon />}
+              variant="contained"
+              sx={{ borderRadius: 2 }}
+            >
+              Edit
+            </Button>
+          )}
+
+          {editMode && (
+            <Button
+              onClick={handleResetForm}
+              variant="outlined"
+              sx={{ borderRadius: 2 }}
+              disabled={isUpdating}
+            >
+              Reset
+            </Button>
+          )}
+          <Button
+            onClick={handleDeleteProduct}
+            variant="contained"
+            color="error"
+            sx={{ borderRadius: 2 }}
+            disabled={isDeleting}
+          >
             Delete
           </Button>
         </Box>
