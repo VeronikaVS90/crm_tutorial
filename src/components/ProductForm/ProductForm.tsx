@@ -60,7 +60,17 @@ export default function ProductForm({ form, disabled }: ProductFormProps) {
               MenuProps={menuProps}
               value={field.value ?? ""}
             >
-              {Object.values(ProductCategory).map((category) => (
+              {[
+                ...new Set(
+                  [
+                    ...Object.values(ProductCategory),
+                    field.value &&
+                    !Object.values(ProductCategory).includes(field.value)
+                      ? field.value
+                      : null,
+                  ].filter(Boolean) as string[]
+                ),
+              ].map((category) => (
                 <MenuItem key={category} value={category}>
                   {category}
                 </MenuItem>
