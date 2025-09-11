@@ -57,7 +57,7 @@ export default function ProductInfo({
       await onUpdateProduct({ ...data, id: product.id });
       setEditMode(false);
     } catch (err) {
-      handleError(err, "Failed to create product. Please, try again later.");
+      handleError(err, "Failed to update product. Please, try again later.");
     } finally {
       setIsUpdating(false);
     }

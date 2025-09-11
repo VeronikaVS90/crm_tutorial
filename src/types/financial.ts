@@ -44,7 +44,7 @@ export interface IFinance {
   id: string;
   month: FinanceMonth;
   year: FinanceYear;
-  type: string;
+  type: TransactionType;
   transactions: number;
   income: number;
   outcome: number;
@@ -61,4 +61,8 @@ export interface ICreateFinanceBody {
   income: number;
   outcome: number;
   comment: string;
+}
+
+export interface IUpdateFinanceBody extends ICreateFinanceBody {
+  id: string;
 }

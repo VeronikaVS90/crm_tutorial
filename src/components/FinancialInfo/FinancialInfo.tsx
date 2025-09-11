@@ -1,5 +1,5 @@
-import { useForm } from "react-hook-form";
-import type { IFinance } from "../../types/financial";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import type { IFinance, IUpdateFinanceBody } from "../../types/financial";
 import FinancialForm from "../FinancialForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { financialSchema, type FinancialFormType } from "../FinancialForm/lib";
@@ -10,13 +10,25 @@ import {
   DialogContent,
   Typography,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router";
+import { useState } from "react";
+import { handleError } from "../../shared/services/errorHandler";
 
 interface FinancialInfoProps {
   finance: IFinance;
+  onUpdateFinance: (data: IUpdateFinanceBody) => Promise<never | void>;
+  onDeleteFinance: (financeId: string) => Promise<void>;
 }
 
-export default function FinancialInfo({ finance }: FinancialInfoProps) {
+export default function FinancialInfo({
+  finance,
+  onUpdateFinance,
+  onDeleteFinance,
+}: FinancialInfoProps) {
+  const [editMode, setEditMode] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
   const form = useForm<FinancialFormType>({
     resolver: yupResolver(financialSchema),
@@ -30,6 +42,44 @@ export default function FinancialInfo({ finance }: FinancialInfoProps) {
       comment: finance.comment,
     },
   });
+
+  const handleEnableForm = () => {
+    setEditMode(true);
+  };
+
+  const handleResetForm = () => {
+    setEditMode(false);
+    form.reset({
+      month: finance.month,
+      year: finance.year,
+      income: finance.income,
+      outcome: finance.outcome,
+      type: finance.type,
+      transactions: finance.transactions,
+      comment: finance.comment,
+    });
+  };
+
+  const handleSubmitForm: SubmitHandler<FinancialFormType> = async (data) => {
+    try {
+      setIsUpdating(true);
+      await onUpdateFinance({ ...data, id: finance.id });
+      setEditMode(false);
+    } catch (err) {
+      handleError(
+        err,
+        "Failed to update calculation. Please, try again later."
+      );
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleDeleteProduct = async () => {
+    setIsDeleting(true);
+    await onDeleteFinance(finance.id);
+    setIsDeleting(false);
+  };
 
   return (
     <>
@@ -45,7 +95,7 @@ export default function FinancialInfo({ finance }: FinancialInfoProps) {
             <strong>Profit:</strong> {finance.profit}
           </Typography>
 
-          <FinancialForm disabled form={form} />
+          <FinancialForm disabled={!editMode} form={form} />
         </Box>
       </DialogContent>
       <DialogActions sx={{ justifyContent: "space-between" }}>
@@ -58,17 +108,47 @@ export default function FinancialInfo({ finance }: FinancialInfoProps) {
           Go back
         </Button>
 
-        <Box sx={{ display: "flex", gap: 1 }}>
-          <Button variant="contained" sx={{ borderRadius: 2 }}>
-            Update
+        {editMode && (
+          <Button
+            onClick={form.handleSubmit(handleSubmitForm)}
+            variant="contained"
+            sx={{ borderRadius: 2 }}
+            disabled={isUpdating}
+          >
+            Save
           </Button>
-          <Button variant="outlined" sx={{ borderRadius: 2 }}>
+        )}
+        {!editMode && (
+          <Button
+            onClick={handleEnableForm}
+            startIcon={<EditIcon />}
+            variant="contained"
+            sx={{ borderRadius: 2 }}
+          >
+            Edit
+          </Button>
+        )}
+
+        {editMode && (
+          <Button
+            onClick={handleResetForm}
+            variant="outlined"
+            sx={{ borderRadius: 2 }}
+            disabled={isUpdating}
+          >
             Reset
           </Button>
-          <Button variant="contained" color="error" sx={{ borderRadius: 2 }}>
-            Delete
-          </Button>
-        </Box>
+        )}
+
+        <Button
+          onClick={handleDeleteProduct}
+          variant="contained"
+          color="error"
+          sx={{ borderRadius: 2 }}
+          disabled={isDeleting}
+        >
+          Delete
+        </Button>
       </DialogActions>
     </>
   );
