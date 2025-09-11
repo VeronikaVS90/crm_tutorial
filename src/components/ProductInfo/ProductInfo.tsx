@@ -3,7 +3,7 @@ import type { IProduct, IUpdateProductBody } from "../../types/products";
 import ProductForm from "../ProductForm/ProductForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { productSchema, type ProductFormType } from "../ProductForm/lib";
-import { Box, Button, DialogActions, Typography, Chip } from "@mui/material";
+import { Box, Button, Typography, Chip, Stack } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router";
 import { useState } from "react";
@@ -101,7 +101,13 @@ export default function ProductInfo({
         <ProductForm disabled={!editMode || isUpdating} form={form} />
       </Box>
 
-      <DialogActions sx={{ justifyContent: "space-between" }}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={2}
+        sx={{ mt: 2 }}
+      >
         <Button
           onClick={() => navigate("/products")}
           type="button"
@@ -111,7 +117,7 @@ export default function ProductInfo({
           Go back
         </Button>
 
-        <Box sx={{ display: "flex", gap: 1 }}>
+        <Stack direction="row" spacing={2}>
           {editMode && (
             <Button
               onClick={form.handleSubmit(handleSubmitForm)}
@@ -152,8 +158,8 @@ export default function ProductInfo({
           >
             Delete
           </Button>
-        </Box>
-      </DialogActions>
+        </Stack>
+      </Stack>
     </>
   );
 }
