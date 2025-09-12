@@ -6,12 +6,12 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CreateProductForm from "../ProductForm";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { productSchema, type ProductFormType } from "../ProductForm/lib";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { handleError } from "../../shared/services/errorHandler";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { productsService } from "../../shared/services/products";
 import { queryKeys } from "../../shared/react-query/queryKeys";
 

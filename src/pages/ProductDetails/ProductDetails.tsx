@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { productsService } from "../../shared/services/products";
 import { handleError } from "../../shared/services/errorHandler";
 import CircularIndeterminate from "../../components/Loader/Loader";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import {
   productSchema,
   type ProductFormType,
@@ -12,7 +13,6 @@ import {
 import ProductForm from "../../components/ProductForm";
 import { ProductReadonlyInfo } from "../../components/ui/Product";
 import { ProductActions } from "../../components/ui/Product";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "../../shared/react-query/queryKeys";
 
 export default function ProductDetails() {

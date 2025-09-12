@@ -1,6 +1,6 @@
 import type { ITableColumn } from "../../../components/Table/lib";
-import MonthBadge from "../../../shared/ui/MonthBadge";
 import type { IFinance } from "../../../types/financial";
+import MonthBadge from "../../../shared/ui/MonthBadge";
 
 export const financialColumns: ITableColumn<IFinance>[] = [
   { id: "id", label: "Id" },

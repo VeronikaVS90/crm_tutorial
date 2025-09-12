@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { financialStore } from "../../shared/store/financial";
 import { observer } from "mobx-react-lite";
 import CircularIndeterminate from "../../components/Loader/Loader";
@@ -6,7 +7,6 @@ import { Table } from "../../components/Table";
 import { financialColumns } from "./lib";
 import { TableHeader } from "../../components/Table";
 import { CreateFinancialModal } from "../../components/Modal";
-import { useNavigate } from "react-router";
 
 const Financial = observer(() => {
   const { financial, isLoading } = financialStore;

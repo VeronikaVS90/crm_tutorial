@@ -1,5 +1,3 @@
-import { type UseFormReturn, Controller } from "react-hook-form";
-import { type ProductFormType } from "./lib";
 import {
   Checkbox,
   FormControl,
@@ -10,6 +8,8 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { type UseFormReturn, Controller } from "react-hook-form";
+import { type ProductFormType } from "./lib";
 import { ProductCategory } from "../../types/products";
 
 interface ProductFormProps {
