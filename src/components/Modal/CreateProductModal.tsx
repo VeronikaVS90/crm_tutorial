@@ -10,9 +10,10 @@ import CreateProductForm from "../ProductForm";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { productSchema, type ProductFormType } from "../ProductForm/lib";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { productsStore } from "../../shared/store/products";
-import { useState } from "react";
 import { handleError } from "../../shared/services/errorHandler";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { productsService } from "../../shared/services/products";
+import { queryKeys } from "../../shared/react-query/queryKeys";
 
 interface CreateProductModalProps {
   open: boolean;
@@ -20,21 +21,27 @@ interface CreateProductModalProps {
 }
 
 function ModalBody({ onClose }: Pick<CreateProductModalProps, "onClose">) {
-  const [isCreating, setIsCreating] = useState(false);
+  const queryClient = useQueryClient();
+
+  const { mutate: createProduct, isPending } = useMutation({
+    mutationFn: productsService.createProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.products.list });
+    },
+    onError: (error) => {
+      handleError(error, "Failed to create product. Please, try again later.");
+    },
+  });
 
   const form = useForm<ProductFormType>({
     resolver: yupResolver(productSchema),
   });
-  const onSubmit: SubmitHandler<ProductFormType> = async (data) => {
-    try {
-      setIsCreating(true);
-      await productsStore.createProduct(data);
-      form.reset();
-    } catch (err) {
-      handleError(err, "Failed to create product. Please, try again later.");
-    } finally {
-      setIsCreating(false);
-    }
+  const onSubmit: SubmitHandler<ProductFormType> = (data) => {
+    createProduct(data, {
+      onSuccess: () => {
+        form.reset();
+      },
+    });
   };
 
   return (
@@ -53,7 +60,7 @@ function ModalBody({ onClose }: Pick<CreateProductModalProps, "onClose">) {
 
       <DialogContent dividers>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
-          <CreateProductForm form={form} disabled={isCreating} />
+          <CreateProductForm form={form} disabled={isPending} />
         </Box>
       </DialogContent>
       <DialogActions>
@@ -70,7 +77,7 @@ function ModalBody({ onClose }: Pick<CreateProductModalProps, "onClose">) {
           variant="contained"
           onClick={form.handleSubmit(onSubmit)}
           sx={{ borderRadius: 2 }}
-          disabled={isCreating}
+          disabled={isPending}
         >
           Create
         </Button>

@@ -1,7 +1,5 @@
 import { Button, Stack } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import type { UseFormReturn } from "react-hook-form";
-import type { ProductFormType } from "../../ProductForm/lib";
 
 interface ProductActionsProps {
   editMode: boolean;
@@ -12,7 +10,6 @@ interface ProductActionsProps {
   onSave: () => void;
   onDelete: () => void;
   onGoBack: () => void;
-  form: UseFormReturn<ProductFormType>;
 }
 
 export default function ProductActions({

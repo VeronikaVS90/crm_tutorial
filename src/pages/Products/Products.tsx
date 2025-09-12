@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
-import { productsStore } from "../../shared/store/products";
-import { observer } from "mobx-react-lite";
+import { useState } from "react";
 import CircularIndeterminate from "../../components/Loader/Loader";
 import { Table } from "../../components/Table";
 import { productColumns } from "./lib";
 import { TableHeader } from "../../components/Table";
 import { CreateProductModal } from "../../components/Modal";
 import { useNavigate } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import { productsService } from "../../shared/services/products";
+import { queryKeys } from "../../shared/react-query/queryKeys";
 
-const Products = observer(() => {
-  const { products, isLoading } = productsStore;
+const Products = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    productsStore.getProducts();
-  }, []);
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: queryKeys.products.list,
+    queryFn: productsService.getProducts,
+  });
 
   const handleCreate = () => {
     setOpen(true);
@@ -39,6 +40,6 @@ const Products = observer(() => {
       <CreateProductModal open={open} onClose={() => setOpen(false)} />
     </>
   );
-});
+};
 
 export default Products;
