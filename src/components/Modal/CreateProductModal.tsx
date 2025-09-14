@@ -7,7 +7,7 @@ import {
   Box,
 } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import CreateProductForm from "../ProductForm";
+import ProductForm from "../ProductForm";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { productSchema, type ProductFormType } from "../ProductForm/lib";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -60,7 +60,7 @@ function ModalBody({ onClose }: Pick<CreateProductModalProps, "onClose">) {
 
       <DialogContent dividers>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
-          <CreateProductForm form={form} disabled={isPending} />
+          <ProductForm form={form} disabled={isPending} />
         </Box>
       </DialogContent>
       <DialogActions>

@@ -6,13 +6,14 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import FinancialForm from "../FinancialForm";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { financialSchema, type FinancialFormType } from "../FinancialForm/lib";
-import { financialStore } from "../../shared/store/financial";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { handleError } from "../../shared/services/errorHandler";
+import { financialService } from "../../shared/services/financial";
+import { queryKeys } from "../../shared/react-query/queryKeys";
 
 interface CreateFinancialModalProps {
   open: boolean;
@@ -20,24 +21,30 @@ interface CreateFinancialModalProps {
 }
 
 function ModalBody({ onClose }: Pick<CreateFinancialModalProps, "onClose">) {
-  const [isCreating, setIsCreating] = useState(false);
+  const queryClient = useQueryClient();
+
+  const { mutate: createFinance, isPending } = useMutation({
+    mutationFn: financialService.createFinance,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.financial.list });
+    },
+    onError: (error) => {
+      handleError(
+        error,
+        "Failed to create calculation. Please, try again later."
+      );
+    },
+  });
 
   const form = useForm<FinancialFormType>({
     resolver: yupResolver(financialSchema),
   });
-  const onSubmit: SubmitHandler<FinancialFormType> = async (data) => {
-    try {
-      setIsCreating(true);
-      await financialStore.createFinance(data);
-      form.reset();
-    } catch (err) {
-      handleError(
-        err,
-        "Failed to create calculation. Please, try again later."
-      );
-    } finally {
-      setIsCreating(false);
-    }
+  const onSubmit: SubmitHandler<FinancialFormType> = (data) => {
+    createFinance(data, {
+      onSuccess: () => {
+        form.reset();
+      },
+    });
   };
 
   return (
@@ -56,7 +63,7 @@ function ModalBody({ onClose }: Pick<CreateFinancialModalProps, "onClose">) {
 
       <DialogContent dividers>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
-          <FinancialForm form={form} disabled={isCreating} />
+          <FinancialForm form={form} disabled={isPending} />
         </Box>
       </DialogContent>
       <DialogActions>
