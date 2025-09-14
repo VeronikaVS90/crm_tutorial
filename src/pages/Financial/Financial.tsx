@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import { financialStore } from "../../shared/store/financial";
-import { observer } from "mobx-react-lite";
+import { useQuery } from "@tanstack/react-query";
 import CircularIndeterminate from "../../components/Loader/Loader";
 import { Table } from "../../components/Table";
 import { financialColumns } from "./lib";
 import { TableHeader } from "../../components/Table";
 import { CreateFinancialModal } from "../../components/Modal";
+import { financialService } from "../../shared/services/financial";
+import { queryKeys } from "../../shared/react-query/queryKeys";
 
-const Financial = observer(() => {
-  const { financial, isLoading } = financialStore;
+const Financial = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    financialStore.getFinance();
-  }, []);
+  const { data: financial = [], isLoading } = useQuery({
+    queryKey: queryKeys.financial.list,
+    queryFn: financialService.getFinance,
+  });
 
   const handleCreate = () => {
     setOpen(true);
@@ -38,6 +39,6 @@ const Financial = observer(() => {
       <CreateFinancialModal open={open} onClose={() => setOpen(false)} />
     </>
   );
-});
+};
 
 export default Financial;

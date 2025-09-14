@@ -74,7 +74,7 @@ export default function ProductDetails() {
     );
   };
 
-  const handleDeleteProduct = async () => {
+  const handleDeleteProduct = () => {
     if (!product) return;
 
     deleteProduct(product.id, {

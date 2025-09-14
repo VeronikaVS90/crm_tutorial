@@ -21,7 +21,7 @@ async function createFinance(data: ICreateFinanceBody) {
 }
 
 async function updateFinance({ id, ...data }: IUpdateFinanceBody) {
-  const res = await api.put<IFinance[]>(`/financial/${id}`, data);
+  const res = await api.put<IFinance>(`/financial/${id}`, data);
   return res.data;
 }
 
