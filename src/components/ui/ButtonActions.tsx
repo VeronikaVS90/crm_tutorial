@@ -1,7 +1,7 @@
 import { Button, Stack } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
-interface ProductActionsProps {
+interface ButtonActionsProps {
   editMode: boolean;
   isUpdating: boolean;
   isDeleting: boolean;
@@ -12,7 +12,7 @@ interface ProductActionsProps {
   onGoBack: () => void;
 }
 
-export default function ProductActions({
+export default function ButtonActions({
   editMode,
   isUpdating,
   isDeleting,
@@ -21,7 +21,7 @@ export default function ProductActions({
   onSave,
   onDelete,
   onGoBack,
-}: ProductActionsProps) {
+}: ButtonActionsProps) {
   return (
     <Stack
       direction="row"

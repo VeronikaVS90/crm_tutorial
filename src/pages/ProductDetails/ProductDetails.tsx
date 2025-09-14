@@ -11,8 +11,8 @@ import {
   type ProductFormType,
 } from "../../components/ProductForm/lib";
 import ProductForm from "../../components/ProductForm";
-import { ProductReadonlyInfo } from "../../components/ui/Product";
-import { ProductActions } from "../../components/ui/Product";
+import { ProductReadonlyInfo } from "../../components/ui";
+import { ButtonActions } from "../../components/ui";
 import { queryKeys } from "../../shared/react-query/queryKeys";
 
 export default function ProductDetails() {
@@ -105,7 +105,7 @@ export default function ProductDetails() {
 
       <ProductForm disabled={!editMode || isUpdating} form={form} />
 
-      <ProductActions
+      <ButtonActions
         editMode={editMode}
         isUpdating={isUpdating}
         isDeleting={isDeleting}
