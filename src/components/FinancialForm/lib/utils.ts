@@ -1,19 +1,14 @@
 import { object, string, mixed, number, type InferType } from "yup";
-import {
-  FinanceMonth,
-  type FinanceYear,
-  TransactionType,
-} from "../../../types/financial";
+import { FinanceMonth, TransactionType } from "../../../types/financial";
 
 export const financialSchema = object({
   month: mixed<FinanceMonth>()
     .oneOf(Object.values(FinanceMonth) as FinanceMonth[])
     .required("Month is required."),
-  year: mixed<FinanceYear>()
-    .oneOf([
-      2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035,
-    ] as FinanceYear[])
-    .required("Year is required."),
+  year: number()
+    .required("Year is required.")
+    .min(2000, "Year must be no earlier than 2000.")
+    .max(2100, "Year must be no later than 2100"),
   income: number()
     .required("Income is required")
     .min(0, "Income must be greater than or equal to 0"),

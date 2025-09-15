@@ -1,4 +1,4 @@
-import { type UseFormReturn, Controller } from "react-hook-form";
+import { Controller, type UseFormReturn } from "react-hook-form";
 import {
   TextField,
   FormControl,
@@ -9,11 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import { type FinancialFormType } from "./lib";
-import {
-  FinanceMonth,
-  type FinanceYear,
-  TransactionType,
-} from "../../types/financial";
+import { FinanceMonth, TransactionType } from "../../types/financial";
 import MonthBadge from "../../shared/ui/MonthBadge";
 
 interface FinancialFormProps {
@@ -28,18 +24,7 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
     formState: { errors },
   } = form;
 
-  const menuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: 200,
-      },
-    },
-  };
-
-  const years: number[] = Array.from(
-    { length: 2035 - 2025 + 1 },
-    (_, i) => 2025 + i
-  );
+  const currentYear = new Date().getFullYear();
 
   return (
     <form>
@@ -49,16 +34,11 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
           control={control}
           render={({ field }) => (
             <FormControl fullWidth margin="normal" disabled={disabled}>
-              <InputLabel required id="month-select-label">
-                Month
-              </InputLabel>
-
+              <InputLabel required>Month</InputLabel>
               <Select
-                labelId="month-select-label"
                 {...field}
                 label="Month"
                 error={!!errors.month}
-                MenuProps={menuProps}
                 value={field.value ?? ""}
               >
                 {Object.values(FinanceMonth).map((month) => (
@@ -67,7 +47,6 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
                   </MenuItem>
                 ))}
               </Select>
-
               {errors.month && (
                 <FormHelperText error>{errors.month.message}</FormHelperText>
               )}
@@ -75,36 +54,17 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
           )}
         />
 
-        <Controller
-          name="year"
-          control={control}
-          render={({ field }) => (
-            <FormControl fullWidth margin="normal" disabled={disabled}>
-              <InputLabel required id="year-select-label">
-                Year
-              </InputLabel>
-              <Select
-                labelId="year-select-label"
-                {...field}
-                label="Year"
-                error={!!errors.year}
-                MenuProps={menuProps}
-                value={field.value ?? ""}
-                onChange={(e) =>
-                  field.onChange(Number(e.target.value) as FinanceYear)
-                }
-              >
-                {years.map((year) => (
-                  <MenuItem key={year} value={year}>
-                    {year}
-                  </MenuItem>
-                ))}
-              </Select>
-              {errors.year && (
-                <FormHelperText error>{errors.year.message}</FormHelperText>
-              )}
-            </FormControl>
-          )}
+        <TextField
+          label="Year"
+          type="number"
+          fullWidth
+          margin="normal"
+          disabled={disabled}
+          error={!!errors.year}
+          helperText={errors.year?.message}
+          placeholder={String(currentYear)}
+          inputProps={{ min: 2000, max: 2100, step: 1 }}
+          {...register("year", { valueAsNumber: true })}
         />
       </Box>
 
@@ -113,79 +73,67 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
         control={control}
         render={({ field }) => (
           <FormControl fullWidth margin="normal" disabled={disabled}>
-            <InputLabel required id="month-select-label">
-              Type
-            </InputLabel>
-
+            <InputLabel required>Type</InputLabel>
             <Select
-              labelId="type-select-label"
               {...field}
               label="Type"
               error={!!errors.type}
-              MenuProps={menuProps}
               value={field.value ?? ""}
             >
-              {[
-                ...new Set(
-                  [
-                    ...Object.values(TransactionType),
-                    field.value &&
-                    !Object.values(TransactionType).includes(field.value)
-                      ? field.value
-                      : null,
-                  ].filter(Boolean) as string[]
-                ),
-              ].map((type) => (
+              {Object.values(TransactionType).map((type) => (
                 <MenuItem key={type} value={type}>
                   {type}
                 </MenuItem>
               ))}
             </Select>
-
-            {errors.month && (
-              <FormHelperText error>{errors.month.message}</FormHelperText>
+            {errors.type && (
+              <FormHelperText error>{errors.type.message}</FormHelperText>
             )}
           </FormControl>
         )}
       />
+
       <TextField
         label="Transactions (amount)"
         type="number"
-        {...register("transactions")}
         fullWidth
         margin="normal"
+        disabled={disabled}
         error={!!errors.transactions}
         helperText={errors.transactions?.message}
-        disabled={disabled}
+        {...register("transactions", { valueAsNumber: true })}
       />
+
       <TextField
         label="Income"
         type="number"
-        {...register("income")}
         fullWidth
         margin="normal"
+        disabled={disabled}
         error={!!errors.income}
         helperText={errors.income?.message}
-        disabled={disabled}
+        {...register("income", { valueAsNumber: true })}
       />
+
       <TextField
         label="Outcome"
         type="number"
-        {...register("outcome")}
         fullWidth
         margin="normal"
+        disabled={disabled}
         error={!!errors.outcome}
         helperText={errors.outcome?.message}
-        disabled={disabled}
+        {...register("outcome", { valueAsNumber: true })}
       />
+
       <TextField
         label="Comment"
-        {...register("comment")}
         fullWidth
         margin="normal"
+        disabled={disabled}
         error={!!errors.comment}
         helperText={errors.comment?.message}
-        disabled={disabled}
+        {...register("comment")}
       />
     </form>
   );

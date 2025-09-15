@@ -38,7 +38,11 @@ function ModalBody({ onClose }: Pick<CreateFinancialModalProps, "onClose">) {
 
   const form = useForm<FinancialFormType>({
     resolver: yupResolver(financialSchema),
+    defaultValues: {
+      year: Math.min(2100, Math.max(2000, new Date().getFullYear())),
+    },
   });
+
   const onSubmit: SubmitHandler<FinancialFormType> = (data) => {
     createFinance(data, {
       onSuccess: () => {

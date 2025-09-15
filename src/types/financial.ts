@@ -13,19 +13,6 @@ export enum FinanceMonth {
   December = "December",
 }
 
-export type FinanceYear =
-  | 2025
-  | 2026
-  | 2027
-  | 2028
-  | 2029
-  | 2030
-  | 2031
-  | 2032
-  | 2033
-  | 2034
-  | 2035;
-
 export enum TransactionType {
   Sale = "Sale", // Sale of products (income)
   Return = "Return", // Return of products (outcome)
@@ -43,7 +30,7 @@ export enum TransactionType {
 export interface IFinance {
   id: string;
   month: FinanceMonth;
-  year: FinanceYear;
+  year: number;
   type: TransactionType;
   transactions: number;
   income: number;
@@ -55,7 +42,7 @@ export interface IFinance {
 
 export interface ICreateFinanceBody {
   month: FinanceMonth;
-  year: FinanceYear;
+  year: number;
   type: string;
   transactions: number;
   income: number;
