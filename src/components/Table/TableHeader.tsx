@@ -12,6 +12,7 @@ interface TableHeaderProps {
   title: string;
   onCreate?: () => void;
   createLabel?: string;
+  search?: string;
   onSearch?: (value: string) => void;
 }
 
@@ -19,6 +20,7 @@ export default function TableHeader({
   title,
   onCreate,
   createLabel = "Create",
+  search,
   onSearch,
 }: TableHeaderProps) {
   return (
@@ -41,6 +43,7 @@ export default function TableHeader({
       <Box sx={{ display: "flex", gap: 2 }}>
         {onSearch && (
           <TextField
+            value={search}
             size="small"
             placeholder="Search..."
             onChange={(e) => onSearch(e.target.value)}

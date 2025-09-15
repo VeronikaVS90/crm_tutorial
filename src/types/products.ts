@@ -8,7 +8,7 @@ export enum ProductCategory {
   Kids = "Kids",
 }
 
-export interface IProduct {
+export interface IProductResponse {
   id: string;
   category: ProductCategory;
   createdAt: string;
@@ -30,4 +30,10 @@ export interface ICreateProductBody {
 
 export interface IUpdateProductBody extends ICreateProductBody {
   id: string;
+}
+
+export interface IGetProductParams {
+  name?: string;
+  page?: number;
+  limit?: number;
 }

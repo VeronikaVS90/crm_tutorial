@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import type { ITableColumn } from "../../../components/Table/lib";
-import type { IProduct } from "../../../types/products";
+import type { IProductResponse } from "../../../types/products";
 
-export const productColumns: ITableColumn<IProduct>[] = [
+export const productColumns: ITableColumn<IProductResponse>[] = [
   { id: "id", label: "Id" },
   { id: "name", label: "Name" },
   { id: "category", label: "Category" },

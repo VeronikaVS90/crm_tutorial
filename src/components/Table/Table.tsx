@@ -4,7 +4,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-// import TablePagination from "@mui/material/TablePagination";
+import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import type { ITableColumn, ITableRow } from "./lib";
 import Tooltip from "@mui/material/Tooltip";
@@ -13,26 +13,33 @@ interface TableProps<T extends ITableRow> {
   columns: ITableColumn<T>[];
   rows: T[];
   rowOnClick?: (data: T) => void;
+  page: number;
+  onChangePage: (value: number) => void;
+  rowsPerPage: number;
+  onChangeRowsPerPage: (value: number) => void;
+  total: number;
 }
 
 export default function Table<T extends ITableRow>({
   columns,
   rows,
   rowOnClick,
+  page,
+  onChangePage,
+  onChangeRowsPerPage,
+  rowsPerPage,
+  total,
 }: TableProps<T>) {
-  //   const [page, setPage] = React.useState(0);
-  //   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    onChangePage(newPage + 1);
+  };
 
-  //   const handleChangePage = (event: unknown, newPage: number) => {
-  //     setPage(newPage);
-  //   };
-
-  //   const handleChangeRowsPerPage = (
-  //     event: React.ChangeEvent<HTMLInputElement>
-  //   ) => {
-  //     setRowsPerPage(+event.target.value);
-  //     setPage(0);
-  //   };
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    onChangeRowsPerPage(+event.target.value);
+    onChangePage(1);
+  };
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -100,15 +107,15 @@ export default function Table<T extends ITableRow>({
           </TableBody>
         </MuiTable>
       </TableContainer>
-      {/* <TablePagination
+      <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={total}
         rowsPerPage={rowsPerPage}
-        page={page}
+        page={page - 1}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      /> */}
+      />
     </Paper>
   );
 }

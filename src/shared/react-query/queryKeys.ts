@@ -1,6 +1,12 @@
+import type { IGetProductParams } from "../../types/products";
+
 export const queryKeys = {
   products: {
-    list: ["products"],
+    all: ["products"],
+    list: ({ name, page, limit }: IGetProductParams) => [
+      "products",
+      { name, page, limit },
+    ],
     details: (productId: string) => ["product", productId],
   },
 

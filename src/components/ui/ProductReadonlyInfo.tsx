@@ -1,12 +1,8 @@
 import { Box, Typography, Chip } from "@mui/material";
+import type { IProductResponse } from "../../types/products";
 
 interface ProductReadonlyInfoProps {
-  product: {
-    id: string;
-    createdAt: string;
-    cost: number;
-    rating: number;
-  };
+  product: IProductResponse;
 }
 
 export default function ProductReadonlyInfo({

@@ -26,7 +26,7 @@ function ModalBody({ onClose }: Pick<CreateProductModalProps, "onClose">) {
   const { mutate: createProduct, isPending } = useMutation({
     mutationFn: productsService.createProduct,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.products.list });
+      queryClient.invalidateQueries({ queryKey: queryKeys.products.all });
     },
     onError: (error) => {
       handleError(error, "Failed to create product. Please, try again later.");

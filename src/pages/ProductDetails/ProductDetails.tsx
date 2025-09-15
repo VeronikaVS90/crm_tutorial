@@ -44,7 +44,7 @@ export default function ProductDetails() {
       });
 
       queryClient.invalidateQueries({
-        queryKey: queryKeys.products.list,
+        queryKey: queryKeys.products.all,
       });
     },
     onError: (error) => {
@@ -57,7 +57,7 @@ export default function ProductDetails() {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.products.list,
+        queryKey: queryKeys.products.all,
       });
     },
 
