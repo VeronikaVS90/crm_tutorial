@@ -1,4 +1,8 @@
-import type { IFinance, FinanceMonth, TransactionType } from "../../types/financial";
+import type {
+  IFinanceResponse,
+  FinanceMonth,
+  TransactionType,
+} from "../../types/financial";
 
 export class Finance {
   id: string;
@@ -12,7 +16,7 @@ export class Finance {
   averageCheck: number;
   comment: string;
 
-  constructor(finance: IFinance) {
+  constructor(finance: IFinanceResponse) {
     this.id = finance.id;
     this.month = finance.month;
     this.year = finance.year;
@@ -24,5 +28,4 @@ export class Finance {
     this.averageCheck = finance.averageCheck;
     this.comment = finance.comment;
   }
-
 }

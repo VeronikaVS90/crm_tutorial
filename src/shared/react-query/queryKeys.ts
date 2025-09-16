@@ -1,3 +1,4 @@
+import type { IGetFinanceParams } from "../../types/financial";
 import type { IGetProductParams } from "../../types/products";
 
 export const queryKeys = {
@@ -11,7 +12,11 @@ export const queryKeys = {
   },
 
   financial: {
-    list: ["financial"],
+    all: ["financial"],
+    list: ({ type, page, limit }: IGetFinanceParams) => [
+      "financial",
+      { type, page, limit },
+    ],
     details: (financeId: string) => ["finance", financeId],
   },
 };

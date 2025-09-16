@@ -1,11 +1,8 @@
 import { Box, Typography } from "@mui/material";
+import type { IFinanceResponse } from "../../types/financial";
 
 interface FinanceReadonlyInfoProps {
-  finance: {
-    id: string;
-    averageCheck: number;
-    profit: number;
-  };
+  finance: IFinanceResponse;
 }
 
 export default function FinanceReadonlyInfo({

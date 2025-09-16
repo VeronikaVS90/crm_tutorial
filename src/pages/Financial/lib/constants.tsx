@@ -1,8 +1,8 @@
 import type { ITableColumn } from "../../../components/Table/lib";
-import type { IFinance } from "../../../types/financial";
 import MonthBadge from "../../../shared/ui/MonthBadge";
+import type { IFinanceResponse } from "../../../types/financial";
 
-export const financialColumns: ITableColumn<IFinance>[] = [
+export const financialColumns: ITableColumn<IFinanceResponse>[] = [
   { id: "id", label: "Id" },
   {
     id: "month",

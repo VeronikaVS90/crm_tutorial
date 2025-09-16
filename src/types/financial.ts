@@ -27,7 +27,7 @@ export enum TransactionType {
   Other = "Other", // Other category
 }
 
-export interface IFinance {
+export interface IFinanceResponse {
   id: string;
   month: FinanceMonth;
   year: number;
@@ -52,4 +52,10 @@ export interface ICreateFinanceBody {
 
 export interface IUpdateFinanceBody extends ICreateFinanceBody {
   id: string;
+}
+
+export interface IGetFinanceParams {
+  type?: string;
+  page?: number;
+  limit?: number;
 }

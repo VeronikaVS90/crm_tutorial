@@ -26,7 +26,7 @@ function ModalBody({ onClose }: Pick<CreateFinancialModalProps, "onClose">) {
   const { mutate: createFinance, isPending } = useMutation({
     mutationFn: financialService.createFinance,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.financial.list });
+      queryClient.invalidateQueries({ queryKey: queryKeys.financial.all });
     },
     onError: (error) => {
       handleError(

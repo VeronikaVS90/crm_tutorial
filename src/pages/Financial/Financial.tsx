@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useDebounce } from "use-debounce";
 import CircularIndeterminate from "../../components/Loader/Loader";
 import { Table } from "../../components/Table";
 import { financialColumns } from "./lib";
 import { TableHeader } from "../../components/Table";
 import { CreateFinancialModal } from "../../components/Modal";
-import { financialService } from "../../shared/services/financial";
-import { queryKeys } from "../../shared/react-query/queryKeys";
+import { useGetFinancial } from "../../shared/hooks/financial/useGetFinancial";
 
 const Financial = () => {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
   const navigate = useNavigate();
+  const [searchDebounced] = useDebounce(search, 500);
 
-  const { data: financial = [], isLoading } = useQuery({
-    queryKey: queryKeys.financial.list,
-    queryFn: financialService.getFinance,
+  const { data: financial = [], isLoading } = useGetFinancial({
+    type: searchDebounced,
+    page,
+    limit,
   });
 
   const handleCreate = () => {
@@ -27,13 +31,21 @@ const Financial = () => {
       {isLoading && <CircularIndeterminate />}
       <TableHeader
         title="Financial"
+        search={search}
         onCreate={handleCreate}
-        onSearch={() => {}}
+        onSearch={(value) => {
+          setSearch(value);
+        }}
       />
       <Table
         rows={financial}
         columns={financialColumns}
         rowOnClick={({ id }) => navigate(`/financial/${id}`)}
+        onChangePage={(value) => setPage(value)}
+        onChangeRowsPerPage={(value) => setLimit(value)}
+        page={page}
+        rowsPerPage={limit}
+        total={100}
       />
 
       <CreateFinancialModal open={open} onClose={() => setOpen(false)} />

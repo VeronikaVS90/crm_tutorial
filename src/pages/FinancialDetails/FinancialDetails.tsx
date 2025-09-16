@@ -47,7 +47,7 @@ export default function FinancialDetails() {
       });
 
       queryClient.invalidateQueries({
-        queryKey: queryKeys.financial.list,
+        queryKey: queryKeys.financial.all,
       });
     },
     onError: (error) => {
@@ -63,7 +63,7 @@ export default function FinancialDetails() {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.financial.list,
+        queryKey: queryKeys.financial.all,
       });
     },
 
