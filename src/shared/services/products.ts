@@ -31,10 +31,10 @@ async function deleteProduct(productId: string) {
   await api.delete(`/products/${productId}`);
 }
 
-// export const productsService = {
-//   getProducts,
-//   createProduct,
-//   getProductById,
-//   updateProduct,
-//   deleteProduct,
-// };
+export const productsService = {
+  getProducts,
+  createProduct,
+  getProductById,
+  updateProduct,
+  deleteProduct,
+};
