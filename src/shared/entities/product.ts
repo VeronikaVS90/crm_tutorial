@@ -27,4 +27,10 @@ export class Product {
   get formattedCreatedAt() {
     return dayjs(this.createdAt).format("DD.MM.YYYY, HH:mm");
   }
+
+  get ratingColor(): "success" | "warning" | "error" {
+    if (this.rating >= 40) return "success";
+    if (this.rating >= 20) return "warning";
+    return "error";
+  }
 }

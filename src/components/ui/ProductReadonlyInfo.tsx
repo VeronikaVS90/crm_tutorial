@@ -1,8 +1,8 @@
 import { Box, Typography, Chip } from "@mui/material";
-import type { IProductResponse } from "../../types/products";
+import type { Product } from "../../shared/entities/product";
 
 interface ProductReadonlyInfoProps {
-  product: IProductResponse;
+  product: Product;
 }
 
 export default function ProductReadonlyInfo({
@@ -25,13 +25,7 @@ export default function ProductReadonlyInfo({
 
       <Chip
         label={`Rating: ${product.rating}`}
-        color={
-          product.rating >= 40
-            ? "success"
-            : product.rating >= 20
-            ? "warning"
-            : "error"
-        }
+        color={product.ratingColor}
         variant="outlined"
         sx={{ width: "fit-content" }}
       />
