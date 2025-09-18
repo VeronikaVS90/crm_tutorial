@@ -33,4 +33,8 @@ export class Product {
     if (this.rating >= 20) return "warning";
     return "error";
   }
+
+  get isAvailability() {
+    return this.isAvailable ? "Yes" : "No";
+  }
 }
