@@ -17,6 +17,14 @@ interface ProductFormProps {
   disabled: boolean;
 }
 
+const menuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: 200,
+      },
+    },
+};
+  
 export default function ProductForm({ form, disabled }: ProductFormProps) {
   const {
     register,
@@ -24,13 +32,6 @@ export default function ProductForm({ form, disabled }: ProductFormProps) {
     formState: { errors },
   } = form;
 
-  const menuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: 200,
-      },
-    },
-  };
 
   return (
     <form>
