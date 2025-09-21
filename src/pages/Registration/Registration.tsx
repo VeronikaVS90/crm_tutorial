@@ -16,10 +16,5 @@ export default function Registration() {
     },
   });
 
-  return (
-    <>
-      <h1>Registration</h1>
-      <RegistrationForm disabled={isPending} onSubmit={mutate} />
-    </>
-  );
+  return <RegistrationForm disabled={isPending} onSubmit={mutate} />;
 }
