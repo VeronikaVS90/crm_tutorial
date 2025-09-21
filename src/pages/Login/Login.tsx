@@ -12,10 +12,5 @@ export default function Login() {
     mutate(data);
   };
 
-  return (
-    <>
-      <h1>Login</h1>
-      <LoginForm disabled={isPending} onSubmit={handleLogin} />
-    </>
-  );
+  return <LoginForm disabled={isPending} onSubmit={handleLogin} />;
 }
