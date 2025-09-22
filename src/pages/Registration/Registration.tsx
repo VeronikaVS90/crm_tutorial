@@ -3,6 +3,7 @@ import RegistrationForm from "../../components/RegistrationForm";
 import { authService } from "../../shared/services/auth";
 import { useNavigate } from "react-router";
 import { handleError } from "../../shared/services/errorHandler";
+import CircularIndeterminate from "../../components/Loader/Loader";
 
 export default function Registration() {
   const navigate = useNavigate();
@@ -16,5 +17,10 @@ export default function Registration() {
     },
   });
 
-  return <RegistrationForm disabled={isPending} onSubmit={mutate} />;
+  return (
+    <>
+      {isPending && <CircularIndeterminate />}
+      <RegistrationForm disabled={isPending} onSubmit={mutate} />
+    </>
+  );
 }

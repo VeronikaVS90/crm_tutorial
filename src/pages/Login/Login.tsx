@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { authService } from "../../shared/services/auth";
 import type { LoginFormType } from "../../components/LoginForm/lib";
 import LoginForm from "../../components/LoginForm";
+import CircularIndeterminate from "../../components/Loader/Loader";
 
 export default function Login() {
   const { mutate, isPending } = useMutation({
@@ -12,5 +13,10 @@ export default function Login() {
     mutate(data);
   };
 
-  return <LoginForm disabled={isPending} onSubmit={handleLogin} />;
+  return (
+    <>
+      {isPending && <CircularIndeterminate />}
+      <LoginForm disabled={isPending} onSubmit={handleLogin} />
+    </>
+  );
 }
