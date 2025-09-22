@@ -6,25 +6,34 @@ import HeaderLink from "./ui/HeaderLink";
 import { navLinks } from "./lib/constants";
 import Logo from "./ui/Logo";
 import UserAvatar from "./ui/Avatar";
+import { authStore } from "../../shared/store/auth";
+import { observer } from "mobx-react-lite";
 
-export default function Header() {
+const Header = observer(() => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo />
-          <Box sx={{ flexGrow: 1, display: "flex" }}>
-            {navLinks.map((link) => (
-              <HeaderLink key={link.path} path={link.path}>
-                {link.label}
-              </HeaderLink>
-            ))}
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <UserAvatar />
-          </Box>
+
+          {authStore.isLoggedIn && (
+            <>
+              <Box sx={{ flexGrow: 1, display: "flex" }}>
+                {navLinks.map((link) => (
+                  <HeaderLink key={link.path} path={link.path}>
+                    {link.label}
+                  </HeaderLink>
+                ))}
+              </Box>
+              <Box sx={{ flexGrow: 0 }}>
+                <UserAvatar />
+              </Box>
+            </>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
   );
-}
+});
+
+export default Header;

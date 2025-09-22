@@ -9,8 +9,8 @@ export default function Registration() {
   const navigate = useNavigate();
   const { mutate, isPending } = useMutation({
     mutationFn: authService.register,
-    onSuccess: () => {
-      navigate("/login");
+    onSuccess: (res) => {
+      navigate("/login", { state: { email: res.data.user.email } });
     },
     onError: (error) => {
       handleError(error, "Failed to register a user. Please, try again later.");

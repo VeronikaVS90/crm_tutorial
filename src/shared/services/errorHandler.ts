@@ -1,3 +1,4 @@
+import { isAxiosError } from "axios";
 import { notification } from "../../components/RootLayout";
 
 export const handleError = (
@@ -6,7 +7,10 @@ export const handleError = (
 ) => {
   console.error(err);
 
-  if (err instanceof Error && err.message) {
+  if (isAxiosError<{ message?: string }>(err)) {
+    const { data = { message: fallbackMessage } } = err.response ?? {};
+    notification(data.message || fallbackMessage);
+  } else if (err instanceof Error && err.message) {
     notification(err.message, "error");
   } else {
     notification(fallbackMessage, "error");

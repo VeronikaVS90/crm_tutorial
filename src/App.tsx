@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router";
 import { lazy } from "react";
 import RootLayout from "./components/RootLayout/RootLayout";
+import PrivateRoute from "./components/Routes/PrivateRoute";
 
 const HomePage = lazy(() => import("./pages/Home"));
 const ProductsPage = lazy(() => import("./pages/Products"));
@@ -14,15 +15,47 @@ function App() {
   return (
     <Routes>
       <Route element={<RootLayout />}>
-        <Route index element={<HomePage />} />
+        <Route
+          index
+          element={
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          }
+        />
         <Route path="/registration" element={<Registration />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/products/:productId" element={<ProductDetailsPage />} />
-        <Route path="/financial" element={<FinancialPage />} />
+        <Route
+          path="/products"
+          element={
+            <PrivateRoute>
+              <ProductsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/products/:productId"
+          element={
+            <PrivateRoute>
+              <ProductDetailsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/financial"
+          element={
+            <PrivateRoute>
+              <FinancialPage />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/financial/:financeId"
-          element={<FinancialDetailsPage />}
+          element={
+            <PrivateRoute>
+              <FinancialDetailsPage />
+            </PrivateRoute>
+          }
         />
       </Route>
     </Routes>

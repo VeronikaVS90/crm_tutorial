@@ -6,13 +6,7 @@ export interface IRegisterBody {
 
 export interface IRegisterResponse {
   data: {
-    user: {
-      id: string;
-      username: string;
-      email: string;
-      createdAt: string;
-      updatedAt: string;
-    };
+    user: IUser;
   };
   message: string;
 }
@@ -24,15 +18,17 @@ export interface ILoginBody {
 
 export interface ILoginResponse {
   data: {
-    user: {
-      id: string;
-      username: string;
-      email: string;
-      createdAt: string;
-      updatedAt: string;
-    };
+    user: IUser;
     accessToken: string;
     refreshToken: string;
   };
   message: string;
+}
+
+export interface IUser {
+  id: string;
+  username: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
 }

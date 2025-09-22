@@ -26,9 +26,14 @@ import { Link as RouterLink } from "react-router-dom";
 interface LoginFormProps {
   onSubmit: (data: LoginFormType) => void;
   disabled: boolean;
+  defaultValues?: Partial<LoginFormType>;
 }
 
-export default function LoginForm({ onSubmit, disabled }: LoginFormProps) {
+export default function LoginForm({
+  onSubmit,
+  disabled,
+  defaultValues,
+}: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -38,6 +43,7 @@ export default function LoginForm({ onSubmit, disabled }: LoginFormProps) {
   } = useForm<LoginFormType>({
     resolver: yupResolver(loginSchema),
     mode: "onTouched",
+    defaultValues,
   });
 
   const isBusy = disabled || isSubmitting;
