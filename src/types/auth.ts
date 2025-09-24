@@ -32,3 +32,18 @@ export interface IUser {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ICurrentResponse {
+  data: {
+    user: IUser;
+  };
+  message: string;
+}
+
+export interface IRefreshResponse {
+  data: {
+    accessToken: string;
+    refreshToken: string;
+  };
+  message: string;
+}

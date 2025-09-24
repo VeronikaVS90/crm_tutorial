@@ -1,7 +1,12 @@
 import { Routes, Route } from "react-router";
-import { lazy } from "react";
+import { lazy, useEffect } from "react";
 import RootLayout from "./components/RootLayout/RootLayout";
 import PrivateRoute from "./components/Routes/PrivateRoute";
+import RestrictedRoute from "./components/Routes/RestrictedRoute";
+import { useQuery } from "@tanstack/react-query";
+import { authService } from "./shared/services/auth";
+import { authStore } from "./shared/store/auth";
+import { tokenStore } from "./shared/store/tokens";
 
 const HomePage = lazy(() => import("./pages/Home"));
 const ProductsPage = lazy(() => import("./pages/Products"));
@@ -12,6 +17,19 @@ const Registration = lazy(() => import("./pages/Registration"));
 const Login = lazy(() => import("./pages/Login"));
 
 function App() {
+  const { data } = useQuery({
+    queryFn: () => authService.current(),
+    queryKey: ["currentUser"],
+    enabled: !!tokenStore.accessToken,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
+
+  useEffect(() => {
+    if (data) authStore.login(data.data.user);
+  }, [data]);
+
   return (
     <Routes>
       <Route element={<RootLayout />}>
@@ -23,8 +41,22 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/registration"
+          element={
+            <RestrictedRoute>
+              <Registration />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute>
+              <Login />
+            </RestrictedRoute>
+          }
+        />
         <Route
           path="/products"
           element={
