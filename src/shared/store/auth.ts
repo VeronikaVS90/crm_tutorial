@@ -17,12 +17,24 @@ class AuthStore {
       user: observable,
       isLoggedIn: observable,
       login: action,
+      logout: action,
     });
   }
 
   login(user: IUser) {
     this.user = user;
     this.isLoggedIn = true;
+  }
+
+  logout() {
+    this.user = {
+      createdAt: "",
+      email: "",
+      id: "",
+      updatedAt: "",
+      username: "",
+    };
+    this.isLoggedIn = false;
   }
 }
 

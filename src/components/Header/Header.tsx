@@ -8,6 +8,7 @@ import Logo from "./ui/Logo";
 import UserAvatar from "./ui/Avatar";
 import { authStore } from "../../shared/store/auth";
 import { observer } from "mobx-react-lite";
+import Logout from "../Logout";
 
 const Header = observer(() => {
   return (
@@ -25,8 +26,9 @@ const Header = observer(() => {
                   </HeaderLink>
                 ))}
               </Box>
-              <Box sx={{ flexGrow: 0 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <UserAvatar />
+                <Logout />
               </Box>
             </>
           )}

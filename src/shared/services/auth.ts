@@ -4,6 +4,7 @@ import type {
   ILoginResponse,
   IRegisterBody,
   IRegisterResponse,
+  ILogoutResponse,
 } from "../../types/auth";
 
 import { authApi } from "./api";
@@ -27,8 +28,20 @@ async function current() {
   return res.data;
 }
 
+async function logout() {
+  const res = await authApi.post<ILogoutResponse>("/auth/logout", undefined, {
+    headers: {
+      "X-Device-Id": localStorage.getItem("deviceId") || "",
+    },
+  });
+
+  tokenStore.clear();
+  return res.data;
+}
+
 export const authService = {
   register,
   login,
   current,
+  logout,
 };

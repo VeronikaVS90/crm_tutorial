@@ -25,6 +25,10 @@ export interface ILoginResponse {
   message: string;
 }
 
+export interface ILogoutResponse {
+  message: string;
+}
+
 export interface IUser {
   id: string;
   username: string;
