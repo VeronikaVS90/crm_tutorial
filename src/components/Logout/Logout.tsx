@@ -1,4 +1,5 @@
 import Button from "@mui/material/Button";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "../../shared/services/auth";
 import { authStore } from "../../shared/store/auth";
@@ -20,7 +21,13 @@ export default function Logout() {
   });
 
   return (
-    <Button onClick={() => mutate()} color="inherit" disabled={isPending}>
+    <Button
+      onClick={() => mutate()}
+      color="inherit"
+      disabled={isPending}
+      endIcon={<LogoutIcon />}
+      sx={{ fontSize: "0.8rem" }}
+    >
       Log out
     </Button>
   );
