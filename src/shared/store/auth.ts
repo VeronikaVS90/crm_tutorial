@@ -1,14 +1,16 @@
 import { action, makeObservable, observable } from "mobx";
 import type { IUser } from "../../types/auth";
 
+const defaultUser: IUser = {
+  createdAt: "",
+  email: "",
+  id: "",
+  updatedAt: "",
+  username: "",
+};
+
 class AuthStore {
-  user: IUser = {
-    createdAt: "",
-    email: "",
-    id: "",
-    updatedAt: "",
-    username: "",
-  };
+  user = defaultUser;
 
   isLoggedIn = false;
 
@@ -28,11 +30,7 @@ class AuthStore {
 
   logout() {
     this.user = {
-      createdAt: "",
-      email: "",
-      id: "",
-      updatedAt: "",
-      username: "",
+      ...defaultUser,
     };
     this.isLoggedIn = false;
   }
