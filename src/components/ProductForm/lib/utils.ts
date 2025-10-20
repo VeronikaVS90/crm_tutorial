@@ -19,6 +19,7 @@ export const productSchema = object({
     )
     .required("Price is required.")
     .positive("Price must be a positive value."),
+  cost: number().default(0),
 });
 
 export type ProductFormType = InferType<typeof productSchema>;

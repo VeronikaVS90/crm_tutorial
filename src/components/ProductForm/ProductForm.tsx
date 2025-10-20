@@ -11,6 +11,7 @@ import {
 import { type UseFormReturn, Controller } from "react-hook-form";
 import { type ProductFormType } from "./lib";
 import { ProductCategory } from "../../types/products";
+import { useEffect } from "react";
 
 interface ProductFormProps {
   form: UseFormReturn<ProductFormType>;
@@ -18,20 +19,31 @@ interface ProductFormProps {
 }
 
 const menuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: 200,
-      },
+  PaperProps: {
+    style: {
+      maxHeight: 200,
     },
+  },
 };
-  
+
 export default function ProductForm({ form, disabled }: ProductFormProps) {
   const {
     register,
     control,
     formState: { errors },
+    watch,
+    setValue,
   } = form;
 
+  const price = watch("price");
+  const amount = watch("amount");
+
+  useEffect(() => {
+    const priceValue = Number(price) || 0;
+    const amountValue = Number(amount) || 0;
+    const calculatedCost = priceValue * amountValue;
+    setValue("cost", calculatedCost);
+  }, [price, amount, setValue]);
 
   return (
     <form>
@@ -103,6 +115,18 @@ export default function ProductForm({ form, disabled }: ProductFormProps) {
         error={!!errors.price}
         helperText={errors.price?.message}
         disabled={disabled}
+      />
+      <TextField
+        label="Cost"
+        type="number"
+        {...register("cost")}
+        fullWidth
+        margin="normal"
+        disabled
+        helperText="Automatically calculated (Price × Amount)"
+        InputProps={{
+          readOnly: true,
+        }}
       />
       <Controller
         name="isAvailable"
