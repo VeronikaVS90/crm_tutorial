@@ -38,6 +38,7 @@ export interface IFinanceResponse {
   profit: number;
   averageCheck: number;
   comment: string;
+  customerId?: string;
 }
 
 export interface ICreateFinanceBody {
@@ -48,6 +49,7 @@ export interface ICreateFinanceBody {
   income: number;
   outcome: number;
   comment: string;
+  customerId?: string;
 }
 
 export interface IUpdateFinanceBody extends ICreateFinanceBody {
@@ -58,4 +60,5 @@ export interface IGetFinanceParams {
   type?: string;
   page?: number;
   limit?: number;
+  customerId?: string;
 }

@@ -15,6 +15,7 @@ export class Finance {
   profit: number;
   averageCheck: number;
   comment: string;
+  customerId?: string;
 
   constructor(finance: IFinanceResponse) {
     this.id = finance.id;
@@ -27,5 +28,6 @@ export class Finance {
     this.profit = finance.profit;
     this.averageCheck = finance.averageCheck;
     this.comment = finance.comment;
+    this.customerId = finance.customerId;
   }
 }
