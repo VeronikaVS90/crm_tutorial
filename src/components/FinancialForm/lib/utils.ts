@@ -22,6 +22,7 @@ export const financialSchema = object({
     .required("Transactions is required.")
     .positive("Transactions must be a positive value."),
   comment: string().required(),
+  customerId: string().transform(() => (value === "" ? undefined : value)).optional(),
 });
 
 export type FinancialFormType = InferType<typeof financialSchema>;

@@ -102,6 +102,7 @@ export default function FinancialDetails() {
       type: finance.type,
       transactions: finance.transactions,
       comment: finance.comment,
+      customerId: finance.customerId ?? "",
     });
   }, [finance, form]);
 

@@ -24,5 +24,10 @@ export const financialColumns: ITableColumn<IFinanceResponse>[] = [
     label: "Average Check",
     headerTooltip: "Income / Transactions",
   },
+  {
+    id: "customerId",
+    label: "Customer",
+    cell: ({ customerId }) => customerId ?? "-",
+  },
   { id: "comment", label: "Comment" },
 ];

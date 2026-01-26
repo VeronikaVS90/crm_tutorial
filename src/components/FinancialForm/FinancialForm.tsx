@@ -11,6 +11,7 @@ import {
 import { type FinancialFormType } from "./lib";
 import { FinanceMonth, TransactionType } from "../../types/financial";
 import MonthBadge from "../../shared/ui/MonthBadge";
+import { useGetCustomers} from "../../shared/hooks/customers/useGetCustomers";
 
 interface FinancialFormProps {
   form: UseFormReturn<FinancialFormType>;
@@ -25,6 +26,11 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
   } = form;
 
   const currentYear = new Date().getFullYear();
+
+  const { data: customers = [] } = useGetCustomers({
+    page: 1,
+    limit: 1000,
+  });
 
   return (
     <form>
@@ -88,6 +94,34 @@ export default function FinancialForm({ form, disabled }: FinancialFormProps) {
             </Select>
             {errors.type && (
               <FormHelperText error>{errors.type.message}</FormHelperText>
+            )}
+          </FormControl>
+        )}
+      />
+
+       <Controller
+        name="customerId"
+        control={control}
+        render={({ field }) => (
+          <FormControl fullWidth margin="normal" disabled={disabled}>
+            <InputLabel>Customer</InputLabel>
+            <Select
+              {...field}
+              label="Customer"
+              error={!!errors.customerId}
+              value={field.value ?? ""}
+            >
+              <MenuItem value="">No customer</MenuItem>
+              {customers.map((customer) => (
+                <MenuItem key={customer.id} value={customer.id}>
+                  {customer.name}
+                </MenuItem>
+              ))}
+            </Select>
+            {errors.customerId && (
+              <FormHelperText error>
+                {errors.customerId.message}
+              </FormHelperText>
             )}
           </FormControl>
         )}
