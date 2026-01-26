@@ -5,7 +5,7 @@ interface CustomerReadonlyInfoProps {
     customer: Customer;
 }
 
-export defaullt function CustomerReadonlyInfo({
+export default function CustomerReadonlyInfo({
     customer,
 }: CustomerReadonlyInfoProps) {
     return (
