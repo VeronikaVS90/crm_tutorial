@@ -15,6 +15,8 @@ const FinancialPage = lazy(() => import("./pages/Financial"));
 const FinancialDetailsPage = lazy(() => import("./pages/FinancialDetails"));
 const Registration = lazy(() => import("./pages/Registration"));
 const Login = lazy(() => import("./pages/Login"));
+const CustomersPage = lazy(() => import("./pages/Customers"));
+const CustomerDetailsPage = lazy(() => import("./pages/CustomerDetails"));
 
 function App() {
   const { data } = useQuery({
@@ -89,7 +91,20 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/customers"
+          element={
+            <PrivateRoute><CustomersPage/></PrivateRoute>
+          }
+        />
+        <Route
+          path="/customers/:customerId"
+          element={
+            <PrivateRoute><CustomerDetailsPage/></PrivateRoute>
+          }
+        />
       </Route>
+
     </Routes>
   );
 }
