@@ -13,13 +13,13 @@ export const queryKeys = {
   },
 
   financial: {
-    all: ["financial"],
-    list: ({ type, page, limit }: IGetFinanceParams) => [
-      "financial",
-      { type, page, limit },
-    ],
-    details: (financeId: string) => ["finance", financeId],
-  },
+  all: ["financial"],
+  list: ({ type, page, limit, customerId }: IGetFinanceParams) => [
+    "financial",
+    { type, page, limit, customerId },
+  ],
+  details: (financeId: string) => ["finance", financeId],
+},
 
   customers: {
     all: ["customers"],

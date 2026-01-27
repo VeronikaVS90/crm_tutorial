@@ -20,13 +20,15 @@ export default function FinancialDetails() {
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
 
-  const form = useForm<FinancialFormType>({
-    resolver: yupResolver(financialSchema),
+  const form = useForm<FinancialFormType, unknown, FinancialFormType>({
+    resolver: yupResolver<FinancialFormType, unknown, FinancialFormType>(
+      financialSchema
+    ),
     defaultValues: {
       year: Math.min(2100, Math.max(2000, new Date().getFullYear())),
+      customerId: "",
     },
   });
-
   const {
     data: finance,
     isLoading,
@@ -133,6 +135,7 @@ export default function FinancialDetails() {
             type: finance.type,
             transactions: finance.transactions,
             comment: finance.comment,
+            customerId: finance.customerId ?? "",
           });
         }}
         onSave={form.handleSubmit(handleUpdateFinance)}

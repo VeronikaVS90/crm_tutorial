@@ -1,7 +1,18 @@
-import { object, string, mixed, number, type InferType } from "yup";
+import { object, string, mixed, number, type ObjectSchema } from "yup";
 import { FinanceMonth, TransactionType } from "../../../types/financial";
 
-export const financialSchema = object({
+export interface FinancialFormValues {
+  month: FinanceMonth;
+  year: number;
+  income: number;
+  outcome: number;
+  type: TransactionType;
+  transactions: number;
+  comment: string;
+  customerId?: string;
+}
+
+export const financialSchema: ObjectSchema<FinancialFormValues> = object({
   month: mixed<FinanceMonth>()
     .oneOf(Object.values(FinanceMonth) as FinanceMonth[])
     .required("Month is required."),
@@ -22,7 +33,9 @@ export const financialSchema = object({
     .required("Transactions is required.")
     .positive("Transactions must be a positive value."),
   comment: string().required(),
-  customerId: string().transform(() => (value === "" ? undefined : value)).optional(),
+  customerId: string()
+    .transform((value) => (value === "" ? undefined : value))
+    .optional(),
 });
 
-export type FinancialFormType = InferType<typeof financialSchema>;
+export type FinancialFormType = FinancialFormValues;

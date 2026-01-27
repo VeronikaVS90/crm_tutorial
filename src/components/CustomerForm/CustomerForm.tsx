@@ -45,13 +45,14 @@ export default function CustomerForm({ form, disabled }: CustomerFormProps) {
                 helperText={errors.company?.message}
                 {...register("company")} />
             <TextField
-                label="Notes"
-                fullWidth
-                margin="normal"
-                disabled={disabled}
-                error={!!errors.notes}
-                helperText={errors.notes?.message}
-                {...register("name")} />
+  label="Notes"
+  fullWidth
+  margin="normal"
+  disabled={disabled}
+  error={!!errors.notes}
+  helperText={errors.notes?.message}
+  {...register("notes")}
+/>
         </form>
     )
 }

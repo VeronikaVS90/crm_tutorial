@@ -36,10 +36,13 @@ function ModalBody({ onClose }: Pick<CreateFinancialModalProps, "onClose">) {
     },
   });
 
-  const form = useForm<FinancialFormType>({
-    resolver: yupResolver(financialSchema),
+  const form = useForm<FinancialFormType, unknown, FinancialFormType>({
+    resolver: yupResolver<FinancialFormType, unknown, FinancialFormType>(
+      financialSchema
+    ),
     defaultValues: {
       year: Math.min(2100, Math.max(2000, new Date().getFullYear())),
+      customerId: "",
     },
   });
 
