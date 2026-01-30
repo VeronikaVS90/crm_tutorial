@@ -26,8 +26,10 @@ function ModalBody({ onClose }: Pick<CreateCustomerModalProps, "onClose">) {
         },
     });
 
-    const form = useForm<CustomerFormType>({
-        resolver: yupResolver(customerSchema),
+    const form = useForm<CustomerFormType, unknown, CustomerFormType>({
+        resolver: yupResolver<CustomerFormType, unknown, CustomerFormType>(
+            customerSchema
+        ),
     });
 
     const onSubmit: SubmitHandler<CustomerFormType> = (data) => {

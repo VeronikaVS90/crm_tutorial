@@ -33,8 +33,10 @@ export default function CustomerDetails() {
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
 
-  const form = useForm<CustomerFormType>({
-    resolver: yupResolver(customerSchema),
+  const form = useForm<CustomerFormType, unknown, CustomerFormType>({
+    resolver: yupResolver<CustomerFormType, unknown, CustomerFormType>(
+      customerSchema
+    ),
   });
 
   const {
@@ -53,6 +55,9 @@ export default function CustomerDetails() {
       page: 1,
       limit: 5,
     });
+
+  const operationsCount = operations.length;
+  const totalProfit = operations.reduce((sum, item) => sum + item.profit, 0);
 
   const queryClient = useQueryClient();
 
@@ -143,9 +148,25 @@ export default function CustomerDetails() {
       />
 
       <Paper sx={{ p: 3, mt: 4 }} elevation={2}>
-        <Typography variant="h6" gutterBottom>
-          Recent operations
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 2,
+            flexWrap: "wrap",
+          }}
+        >
+          <Typography variant="h6">Recent operations</Typography>
+          <Stack direction="row" spacing={1}>
+            <Chip label={`Ops: ${operationsCount}`} size="small" />
+            <Chip
+              label={`Profit: ${formatNumber(totalProfit)}`}
+              size="small"
+              color={totalProfit >= 0 ? "success" : "error"}
+            />
+          </Stack>
+        </Box>
 
         {operationsLoading ? (
           <Typography variant="body2" color="text.secondary">
